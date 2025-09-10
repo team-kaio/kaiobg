@@ -40,6 +40,9 @@ const reducers = {
   clearSaveUserState: (state) => {
     state.saveUserStatus = REQUEST_STATUS.IDLE;
   },
+  clearSaveUserError: (state) => {
+    state.saveUserError = null;
+  },
 };
 
 // Async Thunk

@@ -22,6 +22,8 @@ const UserForm = (props) => {
   const [ phoneNumber, setPhoneNumber ] = useState(initialData?.phoneNumber || '');
   const [ birthdate, setBirthdate ] = useState(initialData?.birthdate || '');
   const [ occupation, setOccupation ] = useState(initialData?.occupation || '');
+  const [ plan, setPlan ] = useState(initialData?.plan || '');
+  const [ frequency, setFrequency ] = useState(initialData?.frequency || '');
   const [ goal, setGoal ] = useState(initialData?.goal || '');
   const [ limitations, setLimitations ] = useState(initialData?.limitations || '');
   const [ medicalRestrictions, setMedicalRestrictions ] = useState(initialData?.medicalRestrictions || '');
@@ -38,17 +40,13 @@ const UserForm = (props) => {
         icon: <FloppyDiskIcon />,
         text: t('Save'),
       },
-      [UserFormConstants.USER_FORM_MODES.ADMIN_EDIT]: {
-        icon: <FloppyDiskIcon />,
-        text: t('Save'),
-      },
     };
   }, [ t ]);
 
   const onSubmitForm = useCallback((event) => {
     event.preventDefault();
 
-    const data = {
+    const data = mode == UserFormConstants.USER_FORM_MODES.SIGN_UP || loggedUser?.isAdmin ? {
       fullName,
       email,
       password,
@@ -56,15 +54,22 @@ const UserForm = (props) => {
       phoneNumber,
       birthdate,
       occupation,
+      plan,
+      frequency,
       goal,
       limitations,
       medicalRestrictions,
       medicine,
       confirmInformation,
+    } : {
+      fullName,
+      phoneNumber,
+      birthdate,
+      occupation,
     };
 
     onSubmit(data);
-  }, [ birthdate, confirmInformation, confirmPassword, email, fullName, goal, limitations, medicalRestrictions, medicine, occupation, onSubmit, password, phoneNumber ]);
+  }, [ birthdate, confirmInformation, confirmPassword, email, frequency, fullName, goal, limitations, loggedUser?.isAdmin, medicalRestrictions, medicine, mode, occupation, onSubmit, password, phoneNumber, plan ]);
 
   return (
     <form onSubmit={onSubmitForm} className={styles.UserForm}>
@@ -137,6 +142,38 @@ const UserForm = (props) => {
           />
         )}
       />
+
+      {
+        mode == UserFormConstants.USER_FORM_MODES.EDIT && loggedUser?.isAdmin ? (
+          <>
+            <FieldWithLabel
+              label={t('Plan')}
+              field={(
+                <Input
+                  type="text"
+                  name="plan"
+                  value={plan}
+                  required={true}
+                  onChange={(event) => setPlan(event.target.value)}
+                />
+              )}
+            />
+
+            <FieldWithLabel
+              label={t('Frequency')}
+              field={(
+                <Input
+                  type="text"
+                  name="frequency"
+                  value={frequency}
+                  required={true}
+                  onChange={(event) => setFrequency(event.target.value)}
+                />
+              )}
+            />
+          </>
+        ) : <></>
+      }
 
       {
         mode == UserFormConstants.USER_FORM_MODES.SIGN_UP ? (

@@ -154,7 +154,7 @@ const AthleteAreaPage = () => {
           <div className={styles.profileInfo}>
             <div className={styles.profileDetails}>
               <UserForm
-                mode={UserFormConstants.USER_FORM_MODES.ADMIN_EDIT}
+                mode={UserFormConstants.USER_FORM_MODES.EDIT}
                 initialData={athleteData}
                 onSubmit={onSubmitSaveUser}
               />
