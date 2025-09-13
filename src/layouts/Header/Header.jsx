@@ -88,6 +88,12 @@ const Header = () => {
           ) : <></>
         }
 
+        {
+          isLoggedIn ? (
+            <Link to={{ pathname: '/workout' }} onClick={closeMenu}>{t('Workout')}</Link>
+          ) : <></>
+        }
+
         <Link to={{ pathname: '/publications' }} onClick={closeMenu}>{t('Publications')}</Link>
 
         <Link to={{ pathname: '/courses' }} onClick={closeMenu}>{t('Courses')}</Link>
