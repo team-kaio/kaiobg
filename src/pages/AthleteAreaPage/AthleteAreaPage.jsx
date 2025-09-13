@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 
-import { ActionCard, AvatarPlaceholder, CalendarIcon, ClipboardCheckIcon, ClipboardListIcon, GrowlFns, Image, LocationPinIcon, UserForm, UserFormConstants, UserIcon } from '@/components';
+import { ActionCard, AvatarPlaceholder, CalendarIcon, ClipboardCheckIcon, ClipboardListIcon, GrowlFns, Image, LocationPinIcon, UploadProfilePictureDialog, UserForm, UserFormConstants, UserIcon } from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { UserSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -24,6 +24,8 @@ const AthleteAreaPage = () => {
   const saveUserError = useSelector(UserSlice.selectors.selectSaveUserError);
   const saveUserStatus = useSelector(UserSlice.selectors.selectSaveUserStatus);
   const saveUserSuccessMessage = useSelector(UserSlice.selectors.selectSaveUserSuccessMessage);
+
+  const uploadDialogFnsRef = useRef(null);
 
   const athleteData = useMemo(() => {
     if(!athleteId) {
@@ -73,10 +75,11 @@ const AthleteAreaPage = () => {
         <div className={styles.content}>
           <div className={styles.profileInfo}>
             <div className={styles.profileAvatar}>
-              {athleteData.avatar
-                ? <Image src={athleteData.avatar} />
-                : <AvatarPlaceholder userName={athleteData.fullName} />
-              }
+              <AvatarPlaceholder
+                userName={athleteData?.fullName}
+                avatar={athleteData?.avatar}
+                uploadDialogFnsRef={uploadDialogFnsRef}
+              />
             </div>
 
             <div className={styles.profileDetails}>
@@ -162,6 +165,11 @@ const AthleteAreaPage = () => {
           </div>
         </div>
       </div>
+
+      <UploadProfilePictureDialog
+        dialogFnsRef={uploadDialogFnsRef}
+        onConfirm={onSubmitSaveUser}
+      />
 
       {GrowlFns.renderSuccessGrowl({
         message: saveUserSuccessMessage,

@@ -5,7 +5,7 @@ service cloud.firestore {
     match /users/{userId} {
       allow create;
       allow read: if request.auth.uid == userId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin;
-      allow write: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin || (request.auth.uid == userId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName', 'phoneNumber', 'birthdate', 'occupation', 'lastCheckInDate']));
+      allow write: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin || (request.auth.uid == userId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName', 'phoneNumber', 'birthdate', 'occupation', 'lastCheckInDate', 'avatar']));
     }
 
     match /users/{userId}/workouts/{document=**} {
