@@ -1,6 +1,7 @@
 export * from './AthleteAreaPage';
 export * from './CheckInsPage';
 export * from './CoursePage';
+export * from './CoursePageStatic';
 export * from './CoursesPage';
 export * from './HomePage';
 export * from './Manage';

@@ -1,7 +1,7 @@
 @use '@/styles/spacing';
 @use '@/styles/screen-sizes' as screenSizes;
 
-.ContentContainer:not(:has([id="homePage"])) {
+.ContentContainer:not(:has([id="homePage"], [id="coursePageStatic"])) {
   max-width: 1200px;
   margin: 0 auto;
   flex: 1;

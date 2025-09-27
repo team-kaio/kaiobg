@@ -22,6 +22,7 @@ import {
   CoursesPage,
   ManageCoursesPage,
   CoursePage,
+  CoursePageStatic,
 } from '@/pages';
 import { UserSlice } from '@/store/slices';
 
@@ -183,6 +184,12 @@ const router = createHashRouter([
         path: 'course',
         element: (
           <CoursePage />
+        ),
+      },
+      {
+        path: 'ebook-ansiedade-esporte',
+        element: (
+          <CoursePageStatic />
         ),
       },
     ],

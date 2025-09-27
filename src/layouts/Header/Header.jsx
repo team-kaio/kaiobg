@@ -96,7 +96,10 @@ const Header = () => {
 
         <Link to={{ pathname: '/publications' }} onClick={closeMenu}>{t('Publications')}</Link>
 
-        <Link to={{ pathname: '/courses' }} onClick={closeMenu}>{t('Courses')}</Link>
+        {/* Comentando para não aparecer no menu, remova o comentário quando tiver a sessão de Cursos disponível */}
+        {/* <Link to={{ pathname: '/courses' }} onClick={closeMenu}>{t('Courses')}</Link> */}
+
+        <Link to={{ pathname: '/ebook-ansiedade-esporte' }} onClick={closeMenu}>E-book</Link>
 
         {
           isLoggedIn && loggedUser?.isAdmin ? (
