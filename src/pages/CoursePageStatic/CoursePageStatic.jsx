@@ -5,9 +5,9 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Button, ButtonConstants, Image } from '@/components';
-import kaioImg from '@/images/ebook-logo.png';
+import ebookLogo from '@/images/ebook-logo.png';
 import kaioImgAbout from '@/images/kaio-hero-section.png';
-import teamKaioImg from '@/images/kaio-pensando.png';
+import kaioPensando from '@/images/kaio-pensando.png';
 
 import styles from './CoursePageStatic.module.scss';
 
@@ -36,11 +36,11 @@ const CoursePageStatic = () => {
             </a>
           </Button>
         </div>
-        <Image className={styles.img} src={kaioImg} width='350px' />
+        <Image className={styles.img} src={ebookLogo} width='300px' />
       </section>
       <section className={styles.About}>
         <div className={styles.container}>
-          <Image className={styles.image} src={teamKaioImg} alt="Kaio" />
+          <Image className={styles.image} src={kaioPensando} alt="Kaio" />
           <div className={styles.text}>
             <h2>O que você aprenderá com o E-Book</h2>
             <ul>
