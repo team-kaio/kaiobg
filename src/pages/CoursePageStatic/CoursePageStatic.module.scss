@@ -127,7 +127,7 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
         grid-template-columns: 1.2fr 1fr;
       }
       .image {
-        width: auto;
+        object-fit: contain;
       }
     }
 
