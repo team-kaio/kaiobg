@@ -41,7 +41,7 @@ const PublicationItem = (props) => {
   }, []);
 
   const onSaveEdit = useCallback(() => {
-    const quillValue = quillRef.current.value;
+    const quillValue = quillRef.current.innerHTML;
     const updatedContent = {
       ...item.content,
       [selectedLanguage]: quillValue,

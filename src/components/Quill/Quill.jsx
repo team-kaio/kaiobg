@@ -1,35 +1,32 @@
-import ImageResize from 'quill-image-resize-module-react';
-import { memo } from 'react';
-import ReactQuill, { Quill } from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import { memo, useEffect } from 'react';
 
-Quill.register('modules/imageResize', ImageResize);
-
-const modules = {
-  toolbar: [
-    [ { 'header': [ 1, 2, false ] } ],
-    [ 'bold', 'italic', 'underline','strike', { align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }, 'blockquote' ],
-    [ { 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' } ],
-    [ 'link', 'image' ],
-    [ 'clean' ],
-  ],
-  imageResize: {
-    parchment: Quill.import('parchment'),
-    modules: [ 'Resize', 'DisplaySize', 'Toolbar' ],
-  },
-};
+import './Quill.scss';
 
 const QuillComponent = (props) => {
   const { value } = props;
   const { quillRef } = props;
+
+  useEffect(() => {
+    if (quillRef.current && window.AlloyEditor) {
+      if (window.CKEDITOR) {
+        window.CKEDITOR.basePath = '/alloy-editor/';
+      }
+
+      const editorInstance = window.AlloyEditor.editable(quillRef.current);
+
+      return () => {
+        if (editorInstance) {
+          editorInstance.destroy();
+        }
+      };
+    }
+  }, [ quillRef ]);
   
   return (
-    <ReactQuill
+    <div
       ref={quillRef}
-      theme="snow"
-      value={value}
-      modules={modules}
-      formats={[ 'image', 'width', 'height', 'link' ]}
+      contentEditable="true"
+      dangerouslySetInnerHTML={{ __html: value }}
     />
   );
 };
