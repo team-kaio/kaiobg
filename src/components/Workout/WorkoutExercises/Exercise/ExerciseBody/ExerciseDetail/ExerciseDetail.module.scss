@@ -12,10 +12,6 @@
 }
 
 .ExerciseValue {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
   &:is(a) {
     max-width: fit-content;
     color: colors.$blue;
