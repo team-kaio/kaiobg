@@ -14,7 +14,7 @@ export const resetPasswordUser = async (email) => {
   const continueURL = window.location.origin;
 
   await sendPasswordResetEmail(auth, email, {
-    url: `${continueURL}/login/`,
+    url: `${continueURL}/#/sign-in`,
   });
 };
 
