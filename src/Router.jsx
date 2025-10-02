@@ -5,24 +5,25 @@ import { createHashRouter, Navigate, RouterProvider, useLocation, useNavigate, u
 import { DefaultLayout } from '@/layouts';
 import {
   AthleteAreaPage,
-  HomePage,
-  ManageExercisesPage,
-  ManageCheckInsPage,
-  ManageWorkoutsPage,
-  SignInPage,
-  SignUpPage,
-  ManagePage,
   CheckInsPage,
-  WorkoutPage,
-  ManagePublicationsPage,
-  ResumePage,
-  PublicationsPage,
-  PublicationPage,
-  ManageUsersPage,
-  CoursesPage,
-  ManageCoursesPage,
   CoursePage,
   CoursePageStatic,
+  CoursesPage,
+  HomePage,
+  ManageCheckInsPage,
+  ManageCoursesPage,
+  ManageExercisesPage,
+  ManagePage,
+  ManagePublicationsPage,
+  ManageUsersPage,
+  ManageWorkoutsPage,
+  PublicationPage,
+  PublicationsPage,
+  ResumePage,
+  SignInPage,
+  SignUpPage,
+  WorkoutPage,
+  ResetPasswordPage,
 } from '@/pages';
 import { UserSlice } from '@/store/slices';
 
@@ -190,6 +191,12 @@ const router = createHashRouter([
         path: 'ebook-ansiedade-esporte',
         element: (
           <CoursePageStatic />
+        ),
+      },
+      {
+        path: 'reset-password',
+        element: (
+          <ResetPasswordPage />
         ),
       },
     ],

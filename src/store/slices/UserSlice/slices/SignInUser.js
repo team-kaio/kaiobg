@@ -12,6 +12,9 @@ const { t } = i18n;
 const initialState = {
   signInStatus: REQUEST_STATUS.IDLE,
   signInError: null,
+  resetPasswordStatus: REQUEST_STATUS.IDLE,
+  resetPasswordError: null,
+  resetPasswordSuccess: null,
 };
 
 // Reducers
@@ -19,11 +22,18 @@ const reducers = {
   clearSignInError: (state) => {
     state.signInError = null;
   },
+  clearResetPasswordError: (state) => {
+    state.resetPasswordError = null;
+  },
+  clearResetPasswordSuccess: (state) => {
+    state.resetPasswordSuccess = null;
+  },
 };
 
 // Async Thunk
 const asyncThunk = {
   signInUser: createAsyncThunk(`${USER_SLICE_NAME}/signInUser`, async (user) => await usersService.signInUser(user)),
+  resetPasswordUser: createAsyncThunk(`${USER_SLICE_NAME}/resetPasswordUser`, async (email) => await usersService.resetPasswordUser(email)),
 };
 
 // Extra Reducers
@@ -40,6 +50,18 @@ const extraReducers = (builder) => {
       state.signInStatus = REQUEST_STATUS.FAILED;
       state.signInError = t(`error-message.sign-in-user.${action.error.code}`);
     })
+
+    .addCase(asyncThunk.resetPasswordUser.pending, (state) => {
+      state.resetPasswordStatus = REQUEST_STATUS.LOADING;
+    })
+    .addCase(asyncThunk.resetPasswordUser.fulfilled, (state) => {
+      state.resetPasswordStatus = REQUEST_STATUS.SUCCEEDED;
+      state.resetPasswordSuccess = t('Email sent');
+    })
+    .addCase(asyncThunk.resetPasswordUser.rejected, (state, action) => {
+      state.resetPasswordStatus = REQUEST_STATUS.FAILED;
+      state.resetPasswordError = t(`error-message.reset-password-user.${action.error.code}`);
+    })
   ;
 };
 
@@ -47,6 +69,12 @@ const extraReducers = (builder) => {
 const selectors = {
   selectSignInError: (state) => {
     return state.users.signInError;
+  },
+  selectResetPasswordError: (state) => {
+    return state.users.resetPasswordError;
+  },
+  selectResetPasswordSuccess: (state) => {
+    return state.users.resetPasswordSuccess;
   },
 };
 

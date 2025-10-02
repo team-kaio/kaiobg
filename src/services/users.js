@@ -9,6 +9,10 @@ export const loadUsers = async () => {
   return await firebaseService.user.loadUsers();
 };
 
+export const resetPasswordUser = async(email) => {
+  await firebaseService.user.resetPasswordUser(email);
+};
+
 export const saveUser = async (data) => {
   return await firebaseService.user.saveUser(data);
 };

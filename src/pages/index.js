@@ -7,6 +7,7 @@ export * from './HomePage';
 export * from './Manage';
 export * from './PublicationPage';
 export * from './PublicationsPage';
+export * from './ResetPasswordPage';
 export * from './ResumePage';
 export * from './SignInPage';
 export * from './SignUpPage';

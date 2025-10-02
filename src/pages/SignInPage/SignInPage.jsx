@@ -82,6 +82,16 @@ const SignInPage = () => {
             {t('Don\'t have an account? Sign up')}
           </Button>
         </Link>
+
+        <Link to={{ pathname: '/reset-password' }}>
+          <Button
+            category={ButtonConstants.ButtonCategories.PRIMARY}
+            textOnly={true}
+            className={styles.btnSignUp}
+          >
+            {t('Forgot your password? Reset here')}
+          </Button>
+        </Link>
       </form>
 
       {GrowlFns.renderErrorGrowl({

@@ -46,6 +46,10 @@ export const loadUsers = async () => {
   return users;
 };
 
+export const resetPasswordUser = async (email) => {
+  await firebaseService.auth.resetPasswordUser(email);
+};
+
 export const saveUser = async (data) => {
   const { uid, ...otherData } = data;
 

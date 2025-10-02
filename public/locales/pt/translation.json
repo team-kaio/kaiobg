@@ -13,6 +13,11 @@
       "auth/missing-password": "Usuário não encontrado",
       "auth/invalid-credential": "Usuário não encontrado"
     },
+    "reset-password-user": {
+      "auth/invalid-email": "Usuário não encontrado",
+      "auth/missing-password": "Usuário não encontrado",
+      "auth/invalid-credential": "Usuário não encontrado"
+    },
     "load-exercises": {
       "auth/network-request-failed": "Erro de Rede: Por favor, verifique a sua conexão com a internet"
     },
@@ -201,5 +206,10 @@
   "No publications found": "Nenhuma publicação encontrada",
   "No courses found": "Nenhum curso encontrado",
   "Upload Picture": "Subir Foto",
-  "Update": "Atualizar"
+  "Update": "Atualizar",
+  "Forgot your password? Reset here": "Esqueceu sua senha? Redefina aqui",
+  "Password Reset": "Redefinição de Senha",
+  "Inform your email to redefine your password": "Informe seu email para redefinir sua senha",
+  "Send reset email": "Enviar email de redefinição",
+  "Email sent": "Email enviado"
 }

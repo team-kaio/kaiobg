@@ -3,11 +3,20 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 
 import { app } from './firebase-app';
 
 export const auth = getAuth(app);
+
+export const resetPasswordUser = async (email) => {
+  const continueURL = window.location.origin;
+
+  await sendPasswordResetEmail(auth, email, {
+    url: `${continueURL}/login/`,
+  });
+};
 
 export const signIn = async (email, password) => {
   const { user } = await signInWithEmailAndPassword(auth, email, password);
