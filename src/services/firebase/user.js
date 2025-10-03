@@ -1,4 +1,4 @@
-import { doc, setDoc, getFirestore, getDoc, collection, getDocs, writeBatch } from 'firebase/firestore';
+import { doc, setDoc, getFirestore, getDoc, collection, getDocs, writeBatch, query, orderBy } from 'firebase/firestore';
 
 import { firebaseService } from '@/services';
 
@@ -39,9 +39,13 @@ export const loadUser = async (uid) => {
 
 export const loadUsers = async () => {
   const collectionRef = collection(db, DB_KEYS.USERS);
-  const docsSnap = await getDocs(collectionRef);
+  const q = query(
+    collectionRef,
+    orderBy('fullName', 'asc'),
+  );
+  const querySnapshots = await getDocs(q);
 
-  const users = docsSnap.docs.map(doc => doc.data());
+  const users = querySnapshots.docs.map(doc => doc.data());
 
   return users;
 };
