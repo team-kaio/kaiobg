@@ -44,7 +44,7 @@ const asyncThunk = {
 
     return await checkInsService.loadUserCheckIns(state.users.loggedUser.uid);
   }),
-  loadCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckInsByDate`, async (date, selectedUser) => await checkInsService.loadCheckInsByDate(date, selectedUser)),
+  loadCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckInsByDate`, async ({ date, user }) => await checkInsService.loadCheckInsByDate(date, user)),
   loadUserCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadUserCheckInsByDate`, async (date, { getState }) => {
     const state = await getState();
 

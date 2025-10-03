@@ -102,7 +102,7 @@ const ManageCheckInsPage = () => {
 
     if(selectedDate) {
       const date = new Date(`${selectedDate} 00:00:00`);
-      dispatch(CheckInSlice.actions.loadCheckInsByDate(utils.getDateIsoFormat(date), userToFilterBy));
+      dispatch(CheckInSlice.actions.loadCheckInsByDate({ date: utils.getDateIsoFormat(date), user: userToFilterBy }));
     }
   }, [ dispatch, selectedDate, selectedUser, viewAllUsersCheckIns, viewLastCheckIns ]);
 
