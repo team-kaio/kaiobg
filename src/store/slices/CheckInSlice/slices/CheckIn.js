@@ -34,7 +34,7 @@ const reducers = {
 
 // Async Thunk
 const asyncThunk = {
-  loadCheckIns: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckIns`, async () => await checkInsService.loadCheckIns()),
+  loadCheckIns: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckIns`, async (selectedUser) => await checkInsService.loadCheckIns(selectedUser)),
   loadUserCheckIns: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadUserCheckIns`, async (_, { getState }) => {
     const state = await getState();
 
@@ -44,7 +44,7 @@ const asyncThunk = {
 
     return await checkInsService.loadUserCheckIns(state.users.loggedUser.uid);
   }),
-  loadCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckInsByDate`, async (date) => await checkInsService.loadCheckInsByDate(date)),
+  loadCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadCheckInsByDate`, async (date, selectedUser) => await checkInsService.loadCheckInsByDate(date, selectedUser)),
   loadUserCheckInsByDate: createAsyncThunk(`${CHECK_IN_SLICE_NAME}/loadUserCheckInsByDate`, async (date, { getState }) => {
     const state = await getState();
 
@@ -150,6 +150,9 @@ const selectors = {
   },
   selectSaveCheckInMessage: (state) => {
     return state.checkIns.saveCheckInMessage;
+  },
+  selectIsLoadingCheckInsStatus: (state) => {
+    return state.checkIns.loadCheckInsStatus === REQUEST_STATUS.LOADING;
   },
 };
 

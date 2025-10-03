@@ -1,11 +1,11 @@
 import { firebaseService } from './firebase';
 
-export const loadCheckIns = async () => {
-  return await firebaseService.checkIn.loadCheckIns();
+export const loadCheckIns = async (selectedUser) => {
+  return await firebaseService.checkIn.loadCheckIns(selectedUser);
 };
 
-export const loadCheckInsByDate = async (date) => {
-  return await firebaseService.checkIn.loadCheckInsByDate(date);
+export const loadCheckInsByDate = async (date, selectedUser) => {
+  return await firebaseService.checkIn.loadCheckInsByDate(date, selectedUser);
 };
 
 export const loadUserCheckIns = async (userUid) => {

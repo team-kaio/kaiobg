@@ -27,12 +27,12 @@ const internalLoadCheckInsByDate = async (date, userUid = null) => {
   });
 };
 
-export const loadCheckIns = async () => {
-  return internalLoadCheckIns();
+export const loadCheckIns = async (selectedUser) => {
+  return internalLoadCheckIns(selectedUser?.uid);
 };
 
-export const loadCheckInsByDate = async (date) => {
-  return internalLoadCheckInsByDate(date);
+export const loadCheckInsByDate = async (date, selectedUser) => {
+  return internalLoadCheckInsByDate(date, selectedUser?.uid);
 };
 
 const internalLoadCheckIns = async (userUid = null) => {
