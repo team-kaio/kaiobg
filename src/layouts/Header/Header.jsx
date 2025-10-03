@@ -101,6 +101,8 @@ const Header = () => {
 
         <Link to={{ pathname: '/ebook-ansiedade-esporte' }} onClick={closeMenu}>E-book</Link>
 
+        <Link to={{ pathname: '/curso-ansiedade-esporte' }} onClick={closeMenu}>Curso</Link>
+
         {
           isLoggedIn && loggedUser?.isAdmin ? (
             <Link to={{ pathname: '/manage' }} onClick={closeMenu}>{t('Manage')}</Link>

@@ -6,6 +6,7 @@ import { DefaultLayout } from '@/layouts';
 import {
   AthleteAreaPage,
   CheckInsPage,
+  CourseAnxietyPage,
   CoursePage,
   CoursePageStatic,
   CoursesPage,
@@ -19,11 +20,11 @@ import {
   ManageWorkoutsPage,
   PublicationPage,
   PublicationsPage,
+  ResetPasswordPage,
   ResumePage,
   SignInPage,
   SignUpPage,
   WorkoutPage,
-  ResetPasswordPage,
 } from '@/pages';
 import { UserSlice } from '@/store/slices';
 
@@ -191,6 +192,12 @@ const router = createHashRouter([
         path: 'ebook-ansiedade-esporte',
         element: (
           <CoursePageStatic />
+        ),
+      },
+      {
+        path: 'curso-ansiedade-esporte',
+        element: (
+          <CourseAnxietyPage />
         ),
       },
       {
