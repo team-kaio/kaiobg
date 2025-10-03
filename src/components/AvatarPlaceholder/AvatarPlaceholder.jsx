@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Image } from '@/components';
+import { Button, ButtonConstants, CameraIcon, Image } from '@/components';
 import { utils } from '@/utils';
 
 import styles from './AvatarPlaceholder.module.scss';
@@ -13,10 +13,9 @@ const AvatarPlaceholder = (props) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <div className={styles.AvatarContainer}>
       <div
         className={styles.AvatarPlaceholder}
-        onClick={() => uploadDialogFnsRef?.current?.show()}
         data-change-text={t('Update')}
       >
         {
@@ -27,7 +26,15 @@ const AvatarPlaceholder = (props) => {
           ) : utils.getInitialsName(userName)
         }
       </div>
-    </>
+
+      <Button
+        category={ButtonConstants.ButtonCategories.PRIMARY}
+        icon={<CameraIcon />}
+        onClick={() => uploadDialogFnsRef?.current?.show()}
+      >
+        {t('Update')}
+      </Button>
+    </div>
   );
 };
 

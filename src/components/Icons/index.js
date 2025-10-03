@@ -1,6 +1,7 @@
 export * from './ArrowLeftLongIcon';
 export * from './BarsIcon';
 export * from './CalendarIcon';
+export * from './CameraIcon';
 export * from './CaretDownIcon';
 export * from './CaretUpIcon';
 export * from './CheckIcon';
