@@ -1,13 +1,12 @@
 import { memo } from 'react';
+import { Helmet } from 'react-helmet';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Helmet } from 'react-helmet';
 
 
 import { Button, ButtonConstants, Image } from '@/components';
-import ebookLogo from '@/images/ebook-logo.png';
 import kaioImgAbout from '@/images/kaio-hero-section.png';
 import kaioPensando from '@/images/kaio-pensando.png';
 
@@ -31,7 +30,7 @@ const CourseAnxietyPage = () => {
       <section className={styles.HeroSection}>
         <div className={styles.content}>
           <h1>Curso Ansiedade no Esporte</h1>
-          <p>Método prático para controlar e medir sua ansiedade antes e durante as provas, com rotinas e escalas fáceis de aplicar.</p>
+          <p>Método prático e fácil para controlar e medir sua ansiedade antes das competições.</p>
           <div dangerouslySetInnerHTML={{ __html: '<div id="ifr_68ed12ada083e65e2442f146_wrapper" style="margin: 0 auto; width: 100%; "> <div style="position: relative; padding: 56.25% 0 0 0;" id="ifr_68ed12ada083e65e2442f146_aspect"> <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_68ed12ada083e65e2442f146" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" referrerpolicy="origin" onload=" this.onload=null, this.src=\'https://scripts.converteai.net/5f9d0fca-f358-4c9c-9715-c2231cc8dc9d/players/68ed12ada083e65e2442f146/v4/embed.html\' +(location.search||\'?\') +\'&vl=\' +encodeURIComponent(location.href)"></iframe> </div> </div>' }} />
           <Helmet>
             <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js", s.async=!0,document.head.appendChild(s); </script>
