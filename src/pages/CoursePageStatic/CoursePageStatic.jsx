@@ -29,7 +29,7 @@ const CoursePageStatic = () => {
       <section className={styles.HeroSection}>
         <div className={styles.content}>
           <h1>E-book Ansiedade no Esporte</h1>
-          <p>Saiba como controlar e quantificar suas ansiedade nas competições, afinal ela está diretamente vinculada ao seu rendimento.</p>
+          <p>Método prático e fácil para controlar e medir sua ansiedade antes das competições.</p>
           <Button className={styles.primary} category={ButtonConstants.ButtonCategories.SUCCESS}>
             <a target='_blank' href='https://pay.kiwify.com.br/YY8FoZp'>
               Adquira agora o seu E-book
