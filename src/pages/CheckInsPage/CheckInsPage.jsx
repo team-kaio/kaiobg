@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CheckInList, FieldWithLabel, GrowlFns, Input } from '@/components';
+import { CheckInList, FieldWithLabel, Input } from '@/components';
 import { CheckInSlice } from '@/store/slices';
 import { utils } from '@/utils';
 
@@ -14,7 +14,6 @@ const CheckInsPage = () => {
   const dispatch = useDispatch();
 
   const checkIns = useSelector(CheckInSlice.selectors.selectUserCheckIns);
-  const loadCheckInsError = useSelector(CheckInSlice.selectors.selectLoadCheckInsError);
 
   const [ viewLastCheckIns, setViewLastCheckIns ] = useState(true);
   const [ selectedDate, setSelectedDate ] = useState(utils.getDateFormattedForInput(new Date()));
@@ -32,10 +31,6 @@ const CheckInsPage = () => {
       return workoutData;
     });
   }, [ checkIns ]);
-
-  const onCloseLoadCheckInsErrorGrowl = useCallback(() => {
-    dispatch(CheckInSlice.actions.clearLoadCheckInsError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     if(viewLastCheckIns) {
@@ -84,11 +79,6 @@ const CheckInsPage = () => {
       <CheckInList
         checkIns={normalizedCheckIns}
       />
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadCheckInsError,
-        onCloseGrowl: onCloseLoadCheckInsErrorGrowl,
-      })}
     </div>
   );
 };

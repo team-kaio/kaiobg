@@ -3,7 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
 
-import { ActionCard, AvatarPlaceholder, CalendarIcon, ClipboardCheckIcon, ClipboardListIcon, GrowlFns, Image, LocationPinIcon, UploadProfilePictureDialog, UserForm, UserFormConstants, UserIcon } from '@/components';
+import {
+  ActionCard,
+  AvatarPlaceholder,
+  CalendarIcon,
+  ClipboardCheckIcon,
+  ClipboardListIcon,
+  LocationPinIcon,
+  RankingStarIcon,
+  UploadProfilePictureDialog,
+  UserForm,
+  UserFormConstants,
+  UserIcon,
+} from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { UserSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -21,9 +33,7 @@ const AthleteAreaPage = () => {
 
   const loggedUser = useSelector(UserSlice.selectors.selectLoggedUser);
   const selectedAthlete = useSelector(UserSlice.selectors.selectUserByUid(athleteId));
-  const saveUserError = useSelector(UserSlice.selectors.selectSaveUserError);
   const saveUserStatus = useSelector(UserSlice.selectors.selectSaveUserStatus);
-  const saveUserSuccessMessage = useSelector(UserSlice.selectors.selectSaveUserSuccessMessage);
 
   const uploadDialogFnsRef = useRef(null);
 
@@ -51,14 +61,6 @@ const AthleteAreaPage = () => {
       uid: athleteData.uid,
     }));
   }, [ athleteData.uid, dispatch ]);
-
-  const onCloseSaveUserErrorGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearSaveUserError());
-  }, [ dispatch ]);
-
-  const onCloseSaveUserSuccessGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearSaveUserSuccessMessage());
-  }, [ dispatch ]);
 
   useEffect(() => {
     if(saveUserStatus == REQUEST_STATUS.SUCCEEDED) {
@@ -140,16 +142,18 @@ const AthleteAreaPage = () => {
           </div>
         </ActionCard>
 
-        {/* TODO: Confirm with Kaio how the Physical Assessment page will look. */}
-        {/* <ActionCard
-          renderIcon={(props) => <RankingStarIcon className='CSJ' {...props} />}
+        <ActionCard
+          renderIcon={(props) => <RankingStarIcon {...props} />}
           title={t('Physical Assessment')}
           description={t('Assessment history')}
+          to="https://docs.google.com/forms/d/e/1FAIpQLSf2KM8eL73tpl8tEZb61pPZ9ZsEYljEZvDkqFw0eO1sVzK53g/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div className={styles.actionCardMeta}>
-            <div className={styles.label}>{t('Latest tests')}:</div>
+            <div className={styles.value}>{t('Click to fill the form')}</div>
           </div>
-        </ActionCard> */}
+        </ActionCard>
       </div>
 
       <div className={styles.AthleteCard}>
@@ -170,16 +174,6 @@ const AthleteAreaPage = () => {
         dialogFnsRef={uploadDialogFnsRef}
         onConfirm={onSubmitSaveUser}
       />
-
-      {GrowlFns.renderSuccessGrowl({
-        message: saveUserSuccessMessage,
-        onCloseGrowl: onCloseSaveUserSuccessGrowl,
-      })}
-
-      {GrowlFns.renderErrorGrowl({
-        message: saveUserError,
-        onCloseGrowl: onCloseSaveUserErrorGrowl,
-      })}
     </div>
   );
 };

@@ -1,17 +1,13 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Link } from 'react-router';
 
 import styles from './ActionCard.module.scss';
 
 const ActionCard = (props) => {
-  const { title, description, children, to } = props;
-  const { renderIcon = () => null } = props;
+  const { title, description, children, to, renderIcon = () => null, ...otherProps } = props;
 
-  return (
-    <Link
-      className={`${styles.ActionCard} ${styles.hoverable}`}
-      to={to}
-    >
+  const renderCardContent = useCallback(() => {
+    return (
       <div className={`${styles.content} ${styles.contentCompact}`}>
         <div className={styles.actionCardHeader}>
           <div className={styles.icon}>
@@ -24,6 +20,17 @@ const ActionCard = (props) => {
         </div>
         {children}
       </div>
+    );
+  }, [ children, description, renderIcon, title ]);
+
+
+  return (
+    <Link
+      className={`${styles.ActionCard} ${styles.hoverable}`}
+      to={to}
+      {...otherProps}
+    >
+      {renderCardContent()}
     </Link>
   );
 };

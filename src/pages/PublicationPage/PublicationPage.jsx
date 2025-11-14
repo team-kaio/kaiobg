@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router';
 
-import { ArrowLeftLongIcon, Button, GrowlFns } from '@/components';
+import { ArrowLeftLongIcon, Button } from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { PublicationSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -20,7 +20,6 @@ const PublicationPage = () => {
   const publicationId = searchParams.get('id') || null;
 
   const publication = useSelector(PublicationSlice.selectors.selectPublicationById(publicationId));
-  const loadPublicationsError = useSelector(PublicationSlice.selectors.selectLoadPublicationsError);
   const loadPublicationsStatus = useSelector(PublicationSlice.selectors.selectLoadPublicationsStatus);
 
   const isPublicationLoading = useMemo(() => {
@@ -44,10 +43,6 @@ const PublicationPage = () => {
     }
     return utils.getTitleByUserLanguages(publication);
   }, [ publication ]);
-
-  const onCloseLoadPublicationsErrorGrowl = useCallback(() => {
-    dispatch(PublicationSlice.actions.clearLoadPublicationsError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     if(REQUEST_STATUS.IDLE == loadPublicationsStatus) {
@@ -79,11 +74,6 @@ const PublicationPage = () => {
           </>
         ) : <p>{t(isPublicationLoading ? 'Loading...' : 'Publication not found')}</p>
       }
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadPublicationsError,
-        onCloseGrowl: onCloseLoadPublicationsErrorGrowl,
-      })}
     </div>
   );
 };

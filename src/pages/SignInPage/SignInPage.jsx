@@ -1,9 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router';
 
-import { Button, ButtonConstants, FieldWithLabel, GrowlFns, Input, RightToBracketIcon } from '@/components';
+import { Button, ButtonConstants, FieldWithLabel, Input, RightToBracketIcon } from '@/components';
 import { UserSlice } from '@/store/slices';
 
 import styles from './SignInPage.module.scss';
@@ -12,8 +12,6 @@ const SignInPage = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-
-  const signInError = useSelector(UserSlice.selectors.selectSignInError);
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -26,10 +24,6 @@ const SignInPage = () => {
       password,
     }));
   }, [ dispatch, email, password ]);
-
-  const onCloseSignInErrorGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearSignInError());
-  }, [ dispatch ]);
 
   return (
     <div className={styles.SignInContainer}>
@@ -93,11 +87,6 @@ const SignInPage = () => {
           </Button>
         </Link>
       </form>
-
-      {GrowlFns.renderErrorGrowl({
-        message: signInError,
-        onCloseGrowl: onCloseSignInErrorGrowl,
-      })}
     </div>
   );
 };

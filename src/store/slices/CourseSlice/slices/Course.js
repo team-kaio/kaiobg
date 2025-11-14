@@ -1,48 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { coursesService } from '@/services';
 
 import { COURSE_SLICE_NAME } from '../constants';
-
-const { t } = i18n;
 
 // Initial State
 const initialState = {
   courses: [],
   loadCoursesStatus: REQUEST_STATUS.IDLE,
-  loadCoursesError: null,
-
   addCourseStatus: REQUEST_STATUS.IDLE,
-  addCourseError: null,
-
   saveCourseStatus: REQUEST_STATUS.IDLE,
-  saveCourseError: null,
-  saveCourseMessage: null,
-
   removeCourseStatus: REQUEST_STATUS.IDLE,
-  removeCourseError: null,
 };
 
 // Reducers
-const reducers = {
-  clearLoadCoursesError: (state) => {
-    state.loadCoursesError = null;
-  },
-  clearAddCourseError: (state) => {
-    state.addCourseError = null;
-  },
-  clearSaveCourseError: (state) => {
-    state.saveCourseError = null;
-  },
-  setSaveCourseError: (state, action) => {
-    state.saveCourseError = action.payload;
-  },
-  clearSaveCourseMessage: (state) => {
-    state.saveCourseMessage = null;
-  },
-};
+const reducers = {};
 
 // Async Thunk
 const asyncThunk = {
@@ -63,9 +36,8 @@ const extraReducers = (builder) => {
       state.loadCoursesStatus = REQUEST_STATUS.SUCCEEDED;
       state.courses = action.payload;
     })
-    .addCase(asyncThunk.loadCourses.rejected, (state, action) => {
+    .addCase(asyncThunk.loadCourses.rejected, (state) => {
       state.loadCoursesStatus = REQUEST_STATUS.FAILED;
-      state.loadCoursesError = t(`error-message.load-courses.${action.error.code}`);
     });
 
   builder
@@ -76,10 +48,8 @@ const extraReducers = (builder) => {
       state.loadCoursesStatus = REQUEST_STATUS.SUCCEEDED;
       state.courses = action.payload;
     })
-    .addCase(asyncThunk.loadPublishedCourses.rejected, (state, action) => {
+    .addCase(asyncThunk.loadPublishedCourses.rejected, (state) => {
       state.loadCoursesStatus = REQUEST_STATUS.FAILED;
-      state.loadCoursesError = t(`error-message.load-courses.${action.error.code}`);
-      console.error(action.error);
     });
 
   builder
@@ -90,9 +60,8 @@ const extraReducers = (builder) => {
       state.addCourseStatus = REQUEST_STATUS.SUCCEEDED;
       state.courses.unshift(action.payload);
     })
-    .addCase(asyncThunk.addCourse.rejected, (state, action) => {
+    .addCase(asyncThunk.addCourse.rejected, (state) => {
       state.addCourseStatus = REQUEST_STATUS.FAILED;
-      state.addCourseError = t(`error-message.add-course.${action.error.code}`);
     });
 
   builder
@@ -106,12 +75,9 @@ const extraReducers = (builder) => {
       const existingCourseIndex = state.courses.findIndex(course => course.id == updatedCourse.id);
 
       state.courses[existingCourseIndex] = { ...updatedCourse };
-
-      state.saveCourseMessage = t('Saved');
     })
-    .addCase(asyncThunk.saveCourse.rejected, (state, action) => {
+    .addCase(asyncThunk.saveCourse.rejected, (state) => {
       state.saveCourseStatus = REQUEST_STATUS.FAILED;
-      state.saveCourseError = t(`error-message.save-course.${action.error.code}`);
     });
 
   builder
@@ -124,9 +90,8 @@ const extraReducers = (builder) => {
       const courseIndex = state.courses.findIndex(course => course.id == action.payload.id);
       state.courses.splice(courseIndex, 1);
     })
-    .addCase(asyncThunk.removeCourse.rejected, (state, action) => {
+    .addCase(asyncThunk.removeCourse.rejected, (state) => {
       state.removeCourseStatus = REQUEST_STATUS.FAILED;
-      state.removeCourseError = t(`error-message.remove-course.${action.error.code}`);
     });
 };
 
@@ -138,20 +103,8 @@ const selectors = {
   selectCourseById: (courseId) => (state) => {
     return state.courses.courses.find(course => course.id === courseId);
   },
-  selectLoadCoursesError: (state) => {
-    return state.courses.loadCoursesError;
-  },
   selectLoadCoursesStatus: (state) => {
     return state.courses.loadCoursesStatus;
-  },
-  selectAddCourseError: (state) => {
-    return state.courses.addCourseError;
-  },
-  selectSaveCourseError: (state) => {
-    return state.courses.saveCourseError;
-  },
-  selectRemoveCourseError: (state) => {
-    return state.courses.removeCourseError;
   },
   selectSaveCourseMessage: (state) => {
     return state.courses.saveCourseMessage;

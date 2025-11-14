@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GrowlFns, PublicationCard } from '@/components';
+import { PublicationCard } from '@/components';
 import { PublicationSlice } from '@/store/slices';
 
 import styles from './PublicationsPage.module.scss';
@@ -13,11 +13,6 @@ const PublicationsPage = () => {
   const dispatch = useDispatch();
 
   const publications = useSelector(PublicationSlice.selectors.selectAllPublications);
-  const loadPublicationsError = useSelector(PublicationSlice.selectors.selectLoadPublicationsError);
-
-  const onCloseLoadPublicationsErrorGrowl = useCallback(() => {
-    dispatch(PublicationSlice.actions.clearLoadPublicationsError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     dispatch(PublicationSlice.actions.loadPublishedPublications());
@@ -39,11 +34,6 @@ const PublicationsPage = () => {
           );
         })}
       </div>
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadPublicationsError,
-        onCloseGrowl: onCloseLoadPublicationsErrorGrowl,
-      })}
     </div>
   );
 };

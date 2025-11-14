@@ -1,0 +1,101 @@
+{
+  "user/resetPasswordUser/fulfilled": "Email sent",
+  "user/signUpUser/rejected": {
+    "auth/invalid-email": "Please, add a valid email",
+    "auth/email-already-in-use": "An account with that email already exists",
+    "auth/missing-password": "Please, insert a password with at least 6 characters",
+    "auth/weak-password": "Please, insert a password with at least 6 characters"
+  },
+  "user/signInUser/rejected": {
+    "auth/invalid-email": "Invalid email and/or password",
+    "auth/missing-password": "Invalid email and/or password",
+    "auth/invalid-credential": "Invalid email and/or password"
+  },
+  "exercise/removeExercise/rejected": {
+    "permission-denied": "You don't have permission to remove exercises",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "exercise/saveExercise/rejected": {
+    "permission-denied": "You don't have permission to save exercises",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "exercise/addExercise/rejected": {
+    "permission-denied": "You don't have permission to add exercises",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "exercise/loadExercise/rejected": {
+    "permission-denied": "You don't have permission to load exercises",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "user/saveUserWorkouts/fulfilled": "Workout saved",
+  "user/saveUser/rejected": {
+    "permission-denied": "You don't have permission to save users",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "user/saveUserWorkouts/rejected": {
+    "permission-denied": "You don't have permission to change users workouts",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "user/loadUsers/rejected": {
+    "permission-denied": "You don't have permission to load users",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "publication/savePublication/fulfilled": "Saved",
+  "publication/removePublication/rejected": {
+    "permission-denied": "You don't have permission to remove publications",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "publication/savePublication/rejected": {
+    "permission-denied": "You don't have permission to save publications",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "publication/addPublication/rejected": {
+    "permission-denied": "You don't have permission to add publications",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "publication/loadPublishedPublications/rejected": {
+    "permission-denied": "You don't have permission to load publications",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "publication/loadPublications/rejected": {
+    "permission-denied": "You don't have permission to load publications",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "checkIn/saveCheckIn/fulfilled": "Check-in saved",
+  "checkIn/saveCheckIn/rejected": {
+    "permission-denied": "You don't have permission to send the check-in",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "checkIn/loadUserCheckInsByDate/rejected": {
+    "permission-denied": "You don't have permission to load check-ins",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "checkIn/loadCheckInsByDate/rejected": {
+    "permission-denied": "You don't have permission to load check-ins",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "checkIn/loadUserCheckIns/rejected": {
+    "permission-denied": "You don't have permission to load check-ins",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "checkIn/loadCheckIns/rejected": {
+    "permission-denied": "You don't have permission to load check-ins",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "course/loadCourses/rejected": {
+    "permission-denied": "You don't have permission to load courses",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "course/addCourse/rejected": {
+    "permission-denied": "You don't have permission to add courses",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "course/saveCourse/rejected": {
+    "permission-denied": "You don't have permission to save courses",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  },
+  "course/removeCourse/rejected": {
+    "permission-denied": "You don't have permission to remove courses",
+    "auth/network-request-failed": "Network Error: Please, check your network connection"
+  }
+}

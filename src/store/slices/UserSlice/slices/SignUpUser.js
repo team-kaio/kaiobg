@@ -1,31 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { usersService } from '@/services';
 
 import { USER_SLICE_NAME } from '../constants';
 
-const { t } = i18n;
 
 // Initial State
 const initialState = {
   signUpStatus: REQUEST_STATUS.IDLE,
-  signUpError: null,
 };
 
 // Reducers
-const reducers = {
-  clearSignUpError: (state) => {
-    state.signUpError = null;
-  },
-  confirmPasswordError: (state) => {
-    state.signUpError = t('error-message.sign-up-user.confirm-password-does-not-match');
-  },
-  missingConfirmError: (state) => {
-    state.signUpError = t('error-message.sign-up-user.missing-confirm-error');
-  },
-};
+const reducers = {};
 
 // Async Thunk
 const asyncThunk = {
@@ -41,19 +28,14 @@ const extraReducers = (builder) => {
     .addCase(asyncThunk.signUpUser.fulfilled, (state) => {
       state.signUpStatus = REQUEST_STATUS.SUCCEEDED;
     })
-    .addCase(asyncThunk.signUpUser.rejected, (state, action) => {
+    .addCase(asyncThunk.signUpUser.rejected, (state) => {
       state.signUpStatus = REQUEST_STATUS.FAILED;
-      state.signUpError = t(`error-message.sign-up-user.${action.error.code}`);
     })
   ;
 };
 
 // Selectors
-const selectors = {
-  selectSignUpError: (state) => {
-    return state.users.signUpError;
-  },
-};
+const selectors = {};
 
 export const SignUpUser = {
   initialState,

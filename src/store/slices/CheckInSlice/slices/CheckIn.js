@@ -1,36 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { checkInsService } from '@/services';
 
 import { CHECK_IN_SLICE_NAME } from '../constants';
-
-const { t } = i18n;
 
 // Initial State
 const initialState = {
   checkIns: [],
   loadCheckInsStatus: REQUEST_STATUS.IDLE,
-  loadCheckInsError: null,
-
   saveCheckInStatus: REQUEST_STATUS.IDLE,
-  saveCheckInError: null,
-  saveCheckInMessage: null,
 };
 
 // Reducers
-const reducers = {
-  clearLoadCheckInsError: (state) => {
-    state.loadCheckInsError = null;
-  },
-  clearSaveCheckInError: (state) => {
-    state.saveCheckInError = null;
-  },
-  clearSaveCheckInMessage: (state) => {
-    state.saveCheckInMessage = null;
-  },
-};
+const reducers = {};
 
 // Async Thunk
 const asyncThunk = {
@@ -68,10 +51,8 @@ const extraReducers = (builder) => {
 
       state.checkIns = action.payload;
     })
-    .addCase(asyncThunk.loadCheckIns.rejected, (state, action) => {
+    .addCase(asyncThunk.loadCheckIns.rejected, (state) => {
       state.loadCheckInsStatus = REQUEST_STATUS.FAILED;
-      console.error(action.error);
-      state.loadCheckInsError = t(`error-message.load-check-ins.${action.error.code}`);
     });
 
   builder
@@ -83,10 +64,8 @@ const extraReducers = (builder) => {
 
       state.checkIns = action.payload;
     })
-    .addCase(asyncThunk.loadUserCheckIns.rejected, (state, action) => {
+    .addCase(asyncThunk.loadUserCheckIns.rejected, (state) => {
       state.loadCheckInsStatus = REQUEST_STATUS.FAILED;
-      console.error(action.error);
-      state.loadCheckInsError = t(`error-message.load-check-ins.${action.error.code}`);
     });
 
   builder
@@ -98,10 +77,8 @@ const extraReducers = (builder) => {
 
       state.checkIns = action.payload;
     })
-    .addCase(asyncThunk.loadCheckInsByDate.rejected, (state, action) => {
+    .addCase(asyncThunk.loadCheckInsByDate.rejected, (state) => {
       state.loadCheckInsStatus = REQUEST_STATUS.FAILED;
-      console.error(action.error);
-      state.loadCheckInsError = t(`error-message.load-check-ins.${action.error.code}`);
     });
 
   builder
@@ -113,10 +90,8 @@ const extraReducers = (builder) => {
 
       state.checkIns = action.payload;
     })
-    .addCase(asyncThunk.loadUserCheckInsByDate.rejected, (state, action) => {
+    .addCase(asyncThunk.loadUserCheckInsByDate.rejected, (state) => {
       state.loadCheckInsStatus = REQUEST_STATUS.FAILED;
-      console.error(action.error);
-      state.loadCheckInsError = t(`error-message.load-check-ins.${action.error.code}`);
     });
 
   builder
@@ -125,12 +100,9 @@ const extraReducers = (builder) => {
     })
     .addCase(asyncThunk.saveCheckIn.fulfilled, (state) => {
       state.saveCheckInStatus = REQUEST_STATUS.SUCCEEDED;
-      state.saveCheckInMessage = t('Check-in saved');
     })
-    .addCase(asyncThunk.saveCheckIn.rejected, (state, action) => {
+    .addCase(asyncThunk.saveCheckIn.rejected, (state) => {
       state.saveCheckInStatus = REQUEST_STATUS.FAILED;
-      console.error(action.error);
-      state.saveCheckInError = t(`error-message.save-check-in.${action.error.code}`);
     });
 };
 
@@ -141,15 +113,6 @@ const selectors = {
   },
   selectUserCheckIns: (state) => {
     return state.checkIns.checkIns || [];
-  },
-  selectLoadCheckInsError: (state) => {
-    return state.checkIns.loadCheckInsError;
-  },
-  selectSaveCheckInError: (state) => {
-    return state.checkIns.saveCheckInError;
-  },
-  selectSaveCheckInMessage: (state) => {
-    return state.checkIns.saveCheckInMessage;
   },
   selectIsLoadingCheckInsStatus: (state) => {
     return state.checkIns.loadCheckInsStatus === REQUEST_STATUS.LOADING;

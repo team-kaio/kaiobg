@@ -1,17 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { usersService } from '@/services';
 
 import { USER_SLICE_NAME } from '../constants';
 
-const { t } = i18n;
-
 // Initial State
 const initialState = {
   signOutStatus: REQUEST_STATUS.IDLE,
-  signOutError: null,
 };
 
 // Async Thunk
@@ -29,9 +25,8 @@ const extraReducers = (builder) => {
       state.signOutStatus = REQUEST_STATUS.SUCCEEDED;
       state.loggedUser = null;
     })
-    .addCase(asyncThunk.signOutUser.rejected, (state, action) => {
+    .addCase(asyncThunk.signOutUser.rejected, (state) => {
       state.signOutStatus = REQUEST_STATUS.FAILED;
-      state.loggedUserError = t(`error-message.sign-out-user.${action.error.code}`);
     })
   ;
 };

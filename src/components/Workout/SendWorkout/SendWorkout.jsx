@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, ButtonConstants, GrowlFns, PaperPlaneIcon, TextArea } from '@/components';
+import { Button, ButtonConstants, PaperPlaneIcon, TextArea } from '@/components';
 import { UserSlice, CheckInSlice } from '@/store/slices';
 import { utils } from '@/utils';
 
@@ -14,8 +14,6 @@ const SendWorkout = (props) => {
 
   const dispatch = useDispatch();
 
-  const saveCheckInError = useSelector(CheckInSlice.selectors.selectSaveCheckInError);
-  const saveCheckInMessage = useSelector(CheckInSlice.selectors.selectSaveCheckInMessage);
   const loggedUser = useSelector(UserSlice.selectors.selectLoggedUser);
 
   const [ comment, setComment ] = useState('');
@@ -40,18 +38,9 @@ const SendWorkout = (props) => {
     }));
 
     setComment('');
-  }, [ comment, completedExercises, dispatch, loggedUser.uid, workout ]);
 
-  const onCloseSaveCheckInErrorGrowl = useCallback(() => {
-    dispatch(CheckInSlice.actions.clearSaveCheckInError());
-  }, [ dispatch ]);
-
-  useEffect(() => {
-    if(saveCheckInMessage != null) {
-      dispatch(CheckInSlice.actions.clearSaveCheckInMessage());
-      onCompleteWorkout();
-    }
-  }, [ dispatch, onCompleteWorkout, saveCheckInMessage ]);
+    onCompleteWorkout();
+  }, [ comment, completedExercises, dispatch, loggedUser.uid, onCompleteWorkout, workout ]);
   
   return (
     <>
@@ -68,11 +57,6 @@ const SendWorkout = (props) => {
       >
         {t('Send')}
       </Button>
-
-      {GrowlFns.renderErrorGrowl({
-        message: saveCheckInError,
-        onCloseGrowl: onCloseSaveCheckInErrorGrowl,
-      })}
     </>
   );
 };

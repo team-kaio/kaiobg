@@ -1,20 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { usersService } from '@/services';
 
 import { USER_SLICE_NAME } from '../constants';
 
-const { t } = i18n;
-
 // Initial State
 const initialState = {
   loggedUser: null,
-
   loggedUserStatus: REQUEST_STATUS.IDLE,
-  loggedUserError: null,
-
   firebaseOnAuthStateChangedStatus: REQUEST_STATUS.IDLE,
 };
 
@@ -40,9 +34,8 @@ const extraReducers = (builder) => {
       state.loggedUserStatus = REQUEST_STATUS.SUCCEEDED;
       state.loggedUser = action.payload;
     })
-    .addCase(asyncThunk.loadUser.rejected, (state, action) => {
+    .addCase(asyncThunk.loadUser.rejected, (state) => {
       state.loggedUserStatus = REQUEST_STATUS.FAILED;
-      state.loggedUserError = t(`error-message.logged-user.${action.error.code}`);
     })
   ;
 };

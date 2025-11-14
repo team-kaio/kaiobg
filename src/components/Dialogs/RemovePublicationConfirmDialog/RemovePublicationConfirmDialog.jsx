@@ -1,8 +1,8 @@
 import { memo, useCallback, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Button, ButtonConstants, ConfirmationDialog, GrowlFns } from '@/components';
+import { Button, ButtonConstants, ConfirmationDialog } from '@/components';
 import { PublicationSlice } from '@/store/slices';
 
 const RemovePublicationConfirmDialog = (props) => {
@@ -11,8 +11,6 @@ const RemovePublicationConfirmDialog = (props) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-
-  const removePublicationError = useSelector(PublicationSlice.selectors.selectRemovePublicationError);
 
   const [ show, setShow ] = useState(false);
 
@@ -27,10 +25,6 @@ const RemovePublicationConfirmDialog = (props) => {
   const onConfirm = useCallback(() => {
     dispatch(PublicationSlice.actions.removePublication(publication.id));
   }, [ dispatch, publication.id ]);
-
-  const onCloseRemovePublicationErrorGrowl = useCallback(() => {
-    dispatch(PublicationSlice.actions.clearRemovePublicationError());
-  }, [ dispatch ]);
 
   if(!show) {
     return <></>;
@@ -62,11 +56,6 @@ const RemovePublicationConfirmDialog = (props) => {
           </>
         )}
       />
-      
-      {GrowlFns.renderErrorGrowl({
-        message: removePublicationError,
-        onCloseGrowl: onCloseRemovePublicationErrorGrowl,
-      })}
     </>
   );
 };

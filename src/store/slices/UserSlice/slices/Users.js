@@ -1,47 +1,22 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { usersService } from '@/services';
 
 import { USER_SLICE_NAME } from '../constants';
-
-const { t } = i18n;
 
 // Initial State
 const initialState = {
   users: [],
   loadUsersStatus: REQUEST_STATUS.IDLE,
-  loadUsersError: null,
-
   saveUserWorkoutsStatus: REQUEST_STATUS.IDLE,
-  saveUserWorkoutsError: null,
-  saveUserWorkoutsMessage: null,
-
   saveUserStatus: REQUEST_STATUS.IDLE,
-  saveUserError: null,
-  saveUserSuccessMessage: null,
 };
 
 // Reducers
 const reducers = {
-  clearLoadUsersError: (state) => {
-    state.loadUsersError = null;
-  },
-  clearSaveUserWorkoutsError: (state) => {
-    state.saveUserWorkoutsError = null;
-  },
-  clearSaveUserWorkoutsMessage: (state) => {
-    state.saveUserWorkoutsMessage = null;
-  },
-  clearSaveUserSuccessMessage: (state) => {
-    state.saveUserSuccessMessage = null;
-  },
   clearSaveUserState: (state) => {
     state.saveUserStatus = REQUEST_STATUS.IDLE;
-  },
-  clearSaveUserError: (state) => {
-    state.saveUserError = null;
   },
 };
 
@@ -62,9 +37,8 @@ const extraReducers = (builder) => {
       state.loadUsersStatus = REQUEST_STATUS.SUCCEEDED;
       state.users = action.payload;
     })
-    .addCase(asyncThunk.loadUsers.rejected, (state, action) => {
+    .addCase(asyncThunk.loadUsers.rejected, (state) => {
       state.loadUsersStatus = REQUEST_STATUS.FAILED;
-      state.loadUsersError = t(`error-message.load-users.${action.error.code}`);
     })
   ;
 
@@ -74,11 +48,9 @@ const extraReducers = (builder) => {
     })
     .addCase(asyncThunk.saveUserWorkouts.fulfilled, (state) => {
       state.saveUserWorkoutsStatus = REQUEST_STATUS.SUCCEEDED;
-      state.saveUserWorkoutsMessage = t('Workout saved');
     })
-    .addCase(asyncThunk.saveUserWorkouts.rejected, (state, action) => {
+    .addCase(asyncThunk.saveUserWorkouts.rejected, (state) => {
       state.saveUserWorkoutsStatus = REQUEST_STATUS.FAILED;
-      state.saveUserWorkoutsError = t(`error-message.save-user-workouts.${action.error.code}`);
     })
   ;
 
@@ -88,11 +60,9 @@ const extraReducers = (builder) => {
     })
     .addCase(asyncThunk.saveUser.fulfilled, (state) => {
       state.saveUserStatus = REQUEST_STATUS.SUCCEEDED;
-      state.saveUserSuccessMessage = t('Saved');
     })
-    .addCase(asyncThunk.saveUser.rejected, (state, action) => {
+    .addCase(asyncThunk.saveUser.rejected, (state) => {
       state.saveUserStatus = REQUEST_STATUS.FAILED;
-      state.saveUserError = t(`error-message.save-user.${action.error.code}`);
     })
   ;
 };
@@ -108,23 +78,8 @@ const selectors = {
   selectUserWorkoutsByUid: (userUid) => (state) => {
     return state.users?.users?.find(user => user.uid === userUid)?.workouts;
   },
-  selectLoadUsersError: (state) => {
-    return state.users.loadUsersError;
-  },
-  selectSaveUserWorkoutsError: (state) => {
-    return state.users.saveUserWorkoutsError;
-  },
-  selectSaveUserWorkoutsMessage: (state) => {
-    return state.users.saveUserWorkoutsMessage;
-  },
-  selectSaveUserError: (state) => {
-    return state.users.saveUserError;
-  },
   selectSaveUserStatus: (state) => {
     return state.users.saveUserStatus;
-  },
-  selectSaveUserSuccessMessage: (state) => {
-    return state.users.saveUserSuccessMessage;
   },
 };
 

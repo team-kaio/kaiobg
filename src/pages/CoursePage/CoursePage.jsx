@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router';
 
-import { ArrowLeftLongIcon, Button, GrowlFns } from '@/components';
+import { ArrowLeftLongIcon, Button } from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { CourseSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -20,7 +20,6 @@ const CoursePage = () => {
   const courseId = searchParams.get('id') || null;
 
   const course = useSelector(CourseSlice.selectors.selectCourseById(courseId));
-  const loadCoursesError = useSelector(CourseSlice.selectors.selectLoadCoursesError);
   const loadCoursesStatus = useSelector(CourseSlice.selectors.selectLoadCoursesStatus);
 
   const isCourseLoading = useMemo(() => {
@@ -44,10 +43,6 @@ const CoursePage = () => {
     }
     return utils.getTitleByUserLanguages(course);
   }, [ course ]);
-
-  const onCloseLoadCoursesErrorGrowl = useCallback(() => {
-    dispatch(CourseSlice.actions.clearLoadCoursesError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     if(REQUEST_STATUS.IDLE == loadCoursesStatus) {
@@ -79,11 +74,6 @@ const CoursePage = () => {
           </>
         ) : <p>{t(isCourseLoading ? 'Loading...' : 'Course not found')}</p>
       }
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadCoursesError,
-        onCloseGrowl: onCloseLoadCoursesErrorGrowl,
-      })}
     </div>
   );
 };

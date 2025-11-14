@@ -1,48 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { REQUEST_STATUS } from '@/constants';
-import i18n from '@/i18n';
 import { publicationsService } from '@/services';
 
 import { PUBLICATION_SLICE_NAME } from '../constants';
-
-const { t } = i18n;
 
 // Initial State
 const initialState = {
   publications: [],
   loadPublicationsStatus: REQUEST_STATUS.IDLE,
-  loadPublicationsError: null,
-
   addPublicationStatus: REQUEST_STATUS.IDLE,
-  addPublicationError: null,
-
   savePublicationStatus: REQUEST_STATUS.IDLE,
-  savePublicationError: null,
-  savePublicationMessage: null,
-
   removePublicationStatus: REQUEST_STATUS.IDLE,
-  removePublicationError: null,
 };
 
 // Reducers
-const reducers = {
-  clearLoadPublicationsError: (state) => {
-    state.loadPublicationsError = null;
-  },
-  clearAddPublicationError: (state) => {
-    state.addPublicationError = null;
-  },
-  clearSavePublicationError: (state) => {
-    state.savePublicationError = null;
-  },
-  setSavePublicationError: (state, action) => {
-    state.savePublicationError = action.payload;
-  },
-  clearSavePublicationMessage: (state) => {
-    state.savePublicationMessage = null;
-  },
-};
+const reducers = {};
 
 // Async Thunk
 const asyncThunk = {
@@ -63,9 +36,8 @@ const extraReducers = (builder) => {
       state.loadPublicationsStatus = REQUEST_STATUS.SUCCEEDED;
       state.publications = action.payload;
     })
-    .addCase(asyncThunk.loadPublications.rejected, (state, action) => {
+    .addCase(asyncThunk.loadPublications.rejected, (state) => {
       state.loadPublicationsStatus = REQUEST_STATUS.FAILED;
-      state.loadPublicationsError = t(`error-message.load-publications.${action.error.code}`);
     });
 
   builder
@@ -76,10 +48,8 @@ const extraReducers = (builder) => {
       state.loadPublicationsStatus = REQUEST_STATUS.SUCCEEDED;
       state.publications = action.payload;
     })
-    .addCase(asyncThunk.loadPublishedPublications.rejected, (state, action) => {
+    .addCase(asyncThunk.loadPublishedPublications.rejected, (state) => {
       state.loadPublicationsStatus = REQUEST_STATUS.FAILED;
-      state.loadPublicationsError = t(`error-message.load-publications.${action.error.code}`);
-      console.error(action.error);
     });
 
   builder
@@ -90,9 +60,8 @@ const extraReducers = (builder) => {
       state.addPublicationStatus = REQUEST_STATUS.SUCCEEDED;
       state.publications.unshift(action.payload);
     })
-    .addCase(asyncThunk.addPublication.rejected, (state, action) => {
+    .addCase(asyncThunk.addPublication.rejected, (state) => {
       state.addPublicationStatus = REQUEST_STATUS.FAILED;
-      state.addPublicationError = t(`error-message.add-publication.${action.error.code}`);
     });
 
   builder
@@ -106,12 +75,9 @@ const extraReducers = (builder) => {
       const existingPublicationIndex = state.publications.findIndex(publication => publication.id == updatedPublication.id);
 
       state.publications[existingPublicationIndex] = { ...updatedPublication };
-
-      state.savePublicationMessage = t('Saved');
     })
-    .addCase(asyncThunk.savePublication.rejected, (state, action) => {
+    .addCase(asyncThunk.savePublication.rejected, (state) => {
       state.savePublicationStatus = REQUEST_STATUS.FAILED;
-      state.savePublicationError = t(`error-message.save-publication.${action.error.code}`);
     });
 
   builder
@@ -124,9 +90,8 @@ const extraReducers = (builder) => {
       const publicationIndex = state.publications.findIndex(publication => publication.id == action.payload.id);
       state.publications.splice(publicationIndex, 1);
     })
-    .addCase(asyncThunk.removePublication.rejected, (state, action) => {
+    .addCase(asyncThunk.removePublication.rejected, (state) => {
       state.removePublicationStatus = REQUEST_STATUS.FAILED;
-      state.removePublicationError = t(`error-message.remove-publication.${action.error.code}`);
     });
 };
 
@@ -138,23 +103,8 @@ const selectors = {
   selectPublicationById: (publicationId) => (state) => {
     return state.publications.publications.find(publication => publication.id === publicationId);
   },
-  selectLoadPublicationsError: (state) => {
-    return state.publications.loadPublicationsError;
-  },
   selectLoadPublicationsStatus: (state) => {
     return state.publications.loadPublicationsStatus;
-  },
-  selectAddPublicationError: (state) => {
-    return state.publications.addPublicationError;
-  },
-  selectSavePublicationError: (state) => {
-    return state.publications.savePublicationError;
-  },
-  selectRemovePublicationError: (state) => {
-    return state.publications.removePublicationError;
-  },
-  selectSavePublicationMessage: (state) => {
-    return state.publications.savePublicationMessage;
   },
 };
 

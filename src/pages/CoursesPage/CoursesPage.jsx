@@ -1,8 +1,8 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GrowlFns, CourseCard } from '@/components';
+import { CourseCard } from '@/components';
 import { CourseSlice } from '@/store/slices';
 
 import styles from './CoursesPage.module.scss';
@@ -13,11 +13,6 @@ const CoursesPage = () => {
   const dispatch = useDispatch();
 
   const courses = useSelector(CourseSlice.selectors.selectAllCourses);
-  const loadCoursesError = useSelector(CourseSlice.selectors.selectLoadCoursesError);
-
-  const onCloseLoadCoursesErrorGrowl = useCallback(() => {
-    dispatch(CourseSlice.actions.clearLoadCoursesError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     dispatch(CourseSlice.actions.loadPublishedCourses());
@@ -39,11 +34,6 @@ const CoursesPage = () => {
           );
         })}
       </div>
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadCoursesError,
-        onCloseGrowl: onCloseLoadCoursesErrorGrowl,
-      })}
     </div>
   );
 };

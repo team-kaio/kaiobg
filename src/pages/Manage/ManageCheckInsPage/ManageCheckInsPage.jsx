@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FieldWithLabel, GrowlFns, Input, Select } from '@/components';
+import { FieldWithLabel, Input, Select } from '@/components';
 import { CheckInList } from '@/components/CheckInList';
 import { CheckInSlice, UserSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -15,7 +15,6 @@ const ManageCheckInsPage = () => {
   const dispatch = useDispatch();
 
   const isLoadingCheckInsStatus = useSelector(CheckInSlice.selectors.selectIsLoadingCheckInsStatus);
-  const loadCheckInsError = useSelector(CheckInSlice.selectors.selectLoadCheckInsError);
   const checkIns = useSelector(CheckInSlice.selectors.selectAllCheckIns);
   const users = useSelector(UserSlice.selectors.selectUsers);
 
@@ -83,10 +82,6 @@ const ManageCheckInsPage = () => {
       />
     );
   }, [ getUserByUid, selectedUser?.uid, t, users ]);
-
-  const onCloseLoadCheckInsErrorGrowl = useCallback(() => {
-    dispatch(CheckInSlice.actions.clearLoadCheckInsError());
-  }, [ dispatch ]);
 
   useEffect(() => {
     if(!viewAllUsersCheckIns && !selectedUser) {
@@ -165,11 +160,6 @@ const ManageCheckInsPage = () => {
           />
         ) : <p>{t('Loading...')}</p>
       }
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadCheckInsError,
-        onCloseGrowl: onCloseLoadCheckInsErrorGrowl,
-      })}
     </div>
   );
 };

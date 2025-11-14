@@ -1,63 +1,4 @@
 {
-  "error-message": {
-    "sign-up-user": {
-      "auth/invalid-email": "Por favor, insira um email válido",
-      "auth/email-already-in-use": "Já existe uma conta com esse email",
-      "auth/missing-password": "Por favor, insira uma senha com pelo menos 6 caracteres",
-      "auth/weak-password": "Por favor, insira uma senha com pelo menos 6 caracteres",
-      "confirm-password-does-not-match": "Sua senha e a senha de confirmação devem ser iguais",
-      "missing-confirm-error": "Confirmação de informações faltando"
-    },
-    "sign-in-user": {
-      "auth/invalid-email": "Usuário não encontrado",
-      "auth/missing-password": "Usuário não encontrado",
-      "auth/invalid-credential": "Usuário não encontrado"
-    },
-    "reset-password-user": {
-      "auth/invalid-email": "Usuário não encontrado",
-      "auth/missing-password": "Usuário não encontrado",
-      "auth/invalid-credential": "Usuário não encontrado"
-    },
-    "load-exercises": {
-      "auth/network-request-failed": "Erro de Rede: Por favor, verifique a sua conexão com a internet"
-    },
-    "add-exercise": {
-      "permission-denied": "Você não tem permissão para adicionar exercícios"
-    },
-    "save-exercise": {
-      "permission-denied": "Você não tem permissão para alterar exercícios"
-    },
-    "load-users": {
-      "permission-denied": "Você não tem permissão para carregar a lista de usuários"
-    },
-    "save-user-workouts": {
-      "permission-denied": "Você não tem permissão para alterar os treinos dos usuários"
-    },
-    "save-check-in": {
-      "permission-denied": "Você não tem permissão para enviar o check-in"
-    },
-    "load-check-ins": {
-      "permission-denied": "Você não tem permissão para carregar os check-ins"
-    },
-    "load-publications": {
-      "auth/network-request-failed": "Erro de Rede: Por favor, verifique a sua conexão com a internet"
-    },
-    "add-publication": {
-      "permission-denied": "Você não tem permissão para adicionar publicações"
-    },
-    "save-publication": {
-      "permission-denied": "Você não tem permissão para salvar publicações"
-    },
-    "load-courses": {
-      "auth/network-request-failed": "Erro de Rede: Por favor, verifique a sua conexão com a internet"
-    },
-    "add-course": {
-      "permission-denied": "Você não tem permissão para adicionar cursos"
-    },
-    "save-course": {
-      "permission-denied": "Você não tem permissão para salvar cursos"
-    }
-  },
   "Home": "Início",
   "Athlete": "Atleta",
   "Exercise": "Exercício",
@@ -212,5 +153,29 @@
   "Password Reset": "Redefinição de Senha",
   "Inform your email to redefine your password": "Informe seu email para redefinir sua senha",
   "Send reset email": "Enviar email de redefinição",
-  "Email sent": "Email enviado"
+  "Email sent": "Email enviado",
+  "Click to fill the form": "Clique para preencher o formulário",
+  "Network Error: Please, check your network connection": "Erro de Rede: Por favor, verifique a sua conexão com a internet",
+  "You don't have permission to remove exercises": "Você não tem permissão para remover exercícios",
+  "You don't have permission to save exercises": "Você não tem permissão para alterar exercícios",
+  "You don't have permission to add exercises": "Você não ter permissão para adicionar exercícios",
+  "You don't have permission to load exercises": "Você não tem permissão para carregar os exercícios",
+  "You don't have permission to save users": "Você não tem permissão para salvar usuários",
+  "You don't have permission to change users workouts": "Você não tem permissão para alterar os treinos dos usuários",
+  "You don't have permission to load users": "Você não tem permissão para carregar a lista de usuários",
+  "Saved": "Salvo",
+  "You don't have permission to remove publications": "Você não tem permissão para remover publicações",
+  "You don't have permission to save publications": "Você não tem permissão para salvar publicações",
+  "You don't have permission to add publications": "Você não tem permissão para adicionar publicações",
+  "You don't have permission to load publications": "Você não tem permissão para carregar publicações",
+  "You don't have permission to send the check-in": "Você não tem permissão para enviar o check-in",
+  "You don't have permission to load check-ins": "Você não tem permissão para carregar os check-ins",
+  "Please, add a valid email": "Por favor, insira um email válido",
+  "An account with that email already exists": "Já existe uma conta com esse email",
+  "Please, insert a password with at least 6 characters": "Por favor, insira uma senha com pelo menos 6 caracteres",
+  "Invalid email and/or password": "Email e/ou senha inválida",
+  "You don't have permission to load courses": "Você não tem permissão para carregar os cursos",
+  "You don't have permission to add courses": "Você não tem permissão para adicionar cursos",
+  "You don't have permission to save courses": "Você não tem permissão para salvar cursos",
+  "You don't have permission to remove courses": "Você não tem permissão para remover cursos"
 }

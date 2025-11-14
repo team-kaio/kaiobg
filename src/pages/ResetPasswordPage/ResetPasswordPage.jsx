@@ -1,8 +1,8 @@
 import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Button, ButtonConstants, FieldWithLabel, GrowlFns, Input, RightToBracketIcon } from '@/components';
+import { Button, ButtonConstants, FieldWithLabel, Input, RightToBracketIcon } from '@/components';
 import { UserSlice } from '@/store/slices';
 
 import styles from './ResetPasswordPage.module.scss';
@@ -12,9 +12,6 @@ const ResetPasswordPage = () => {
 
   const dispatch = useDispatch();
 
-  const resetPasswordError = useSelector(UserSlice.selectors.selectResetPasswordError);
-  const resetPasswordSuccess = useSelector(UserSlice.selectors.selectResetPasswordSuccess);
-
   const [ email, setEmail ] = useState('');
 
   const onSubmitPasswordReset = useCallback((event) => {
@@ -22,14 +19,6 @@ const ResetPasswordPage = () => {
 
     dispatch(UserSlice.actions.resetPasswordUser(email));
   }, [ dispatch, email ]);
-
-  const onCloseResetPasswordErrorGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearResetPasswordError());
-  }, [ dispatch ]);
-
-  const onCloseResetPasswordSuccessGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearResetPasswordSuccess());
-  }, [ dispatch ]);
 
   return (
     <div className={styles.ResetPasswordPageContainer}>
@@ -60,16 +49,6 @@ const ResetPasswordPage = () => {
           {t('Send reset email')}
         </Button>
       </form>
-
-      {GrowlFns.renderSuccessGrowl({
-        message: resetPasswordSuccess,
-        onCloseGrowl: onCloseResetPasswordSuccessGrowl,
-      })}
-
-      {GrowlFns.renderErrorGrowl({
-        message: resetPasswordError,
-        onCloseGrowl: onCloseResetPasswordErrorGrowl,
-      })}
     </div>
   );
 };

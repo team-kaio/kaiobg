@@ -1,8 +1,8 @@
 import { memo, useCallback, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Button, ButtonConstants, ConfirmationDialog, GrowlFns } from '@/components';
+import { Button, ButtonConstants, ConfirmationDialog } from '@/components';
 import { ExerciseSlice } from '@/store/slices';
 
 const RemoveExerciseConfirmDialog = (props) => {
@@ -11,8 +11,6 @@ const RemoveExerciseConfirmDialog = (props) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-
-  const removeExerciseError = useSelector(ExerciseSlice.selectors.selectRemoveExerciseError);
 
   const [ show, setShow ] = useState(false);
 
@@ -27,10 +25,6 @@ const RemoveExerciseConfirmDialog = (props) => {
   const onConfirm = useCallback(() => {
     dispatch(ExerciseSlice.actions.removeExercise(exercise.id));
   }, [ dispatch, exercise.id ]);
-
-  const onCloseRemoveExerciseErrorGrowl = useCallback(() => {
-    dispatch(ExerciseSlice.actions.clearRemoveExerciseError());
-  }, [ dispatch ]);
 
   if(!show) {
     return <></>;
@@ -62,11 +56,6 @@ const RemoveExerciseConfirmDialog = (props) => {
           </>
         )}
       />
-      
-      {GrowlFns.renderErrorGrowl({
-        message: removeExerciseError,
-        onCloseGrowl: onCloseRemoveExerciseErrorGrowl,
-      })}
     </>
   );
 };

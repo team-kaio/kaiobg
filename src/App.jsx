@@ -1,8 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GrowlFns } from './components';
 import { Router } from './Router';
 import { firebaseService } from './services';
 import { ExerciseSlice, UserSlice, CheckInSlice } from './store/slices';
@@ -11,9 +10,6 @@ import '@/styles/global.scss';
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const loadExercisesError = useSelector(ExerciseSlice.selectors.selectLoadExercisesError);
-  const loadUsersError = useSelector(UserSlice.selectors.selectLoadUsersError);
 
   const loggedUser = useSelector(UserSlice.selectors.selectLoggedUser);
   
@@ -35,27 +31,9 @@ const App = () => {
     });
   }, [ dispatch ]);
 
-  const onCloseLoadUsersErrorGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearLoadUsersError());
-  }, [ dispatch ]);
-
-  const onCloseLoadExercisesErrorGrowl = useCallback(() => {
-    dispatch(ExerciseSlice.actions.clearLoadExercisesError());
-  }, [ dispatch ]);
-
   return (
     <>
       <Router />
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadUsersError,
-        onCloseGrowl: onCloseLoadUsersErrorGrowl,
-      })}
-
-      {GrowlFns.renderErrorGrowl({
-        message: loadExercisesError,
-        onCloseGrowl: onCloseLoadExercisesErrorGrowl,
-      })}
     </>
   );
 };

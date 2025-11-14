@@ -1,7 +1,7 @@
 import { memo, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ButtonConstants, ConfirmationDialog, GrowlFns } from '@/components';
+import { Button, ButtonConstants, ConfirmationDialog } from '@/components';
 
 const RemoveWorkoutExerciseConfirmDialog = (props) => {
   const { dialogFnsRef, onRemoveExercise } = props;

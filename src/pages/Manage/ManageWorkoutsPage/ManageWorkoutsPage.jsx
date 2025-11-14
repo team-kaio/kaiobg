@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, ButtonConstants, GrowlFns, PlusIcon, SaveButton, Select, WorkoutConstants, WorkoutsList } from '@/components';
+import { Button, ButtonConstants, PlusIcon, SaveButton, Select, WorkoutConstants, WorkoutsList } from '@/components';
 import { UserSlice } from '@/store/slices';
 import { utils } from '@/utils';
 
@@ -14,8 +14,6 @@ const ManageWorkoutsPage = () => {
   const dispatch = useDispatch();
 
   const users = useSelector(UserSlice.selectors.selectUsers);
-  const saveUserWorkoutsError = useSelector(UserSlice.selectors.selectSaveUserWorkoutsError);
-  const saveUserWorkoutsMessage = useSelector(UserSlice.selectors.selectSaveUserWorkoutsMessage);
 
   const [ selectedUser, setSelectedUser ] = useState(null);
 
@@ -188,14 +186,6 @@ const ManageWorkoutsPage = () => {
     );
   }, [ onRemoveWorkout, selectedUser, onUpdateSelectedUserWorkout ]);
 
-  const onCloseSaveUserWorkoutsSuccessGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearSaveUserWorkoutsMessage());
-  }, [ dispatch ]);
-
-  const onCloseSaveUserWorkoutsErrorGrowl = useCallback(() => {
-    dispatch(UserSlice.actions.clearSaveUserWorkoutsError());
-  }, [ dispatch ]);
-
   return (
     <div className={styles.ManageWorkoutsPage}>
       <h1>{t('Manage Workouts')}</h1>
@@ -210,16 +200,6 @@ const ManageWorkoutsPage = () => {
       </div>
       
       {renderSelectedUserWorkouts()}
-
-      {GrowlFns.renderSuccessGrowl({
-        message: saveUserWorkoutsMessage,
-        onCloseGrowl: onCloseSaveUserWorkoutsSuccessGrowl,
-      })}
-
-      {GrowlFns.renderErrorGrowl({
-        message: saveUserWorkoutsError,
-        onCloseGrowl: onCloseSaveUserWorkoutsErrorGrowl,
-      })}
     </div>
   );
 };
