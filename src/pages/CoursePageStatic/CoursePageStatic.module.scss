@@ -16,20 +16,23 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
     min-height: 80vh;
     display: grid;
     place-items: center;
-    text-align: center;
-    background: #0a5f7e; //linear-gradient(120deg, colors.$dark-blue 0%, #0a5f7e 60%, colors.$dark-blue 100%);
+    background: #222;
     padding: 4rem 0;
 
     .content {
-      max-width: 920px;
+      max-width: 1000px;
       margin: 0 auto 2rem;
       padding: 0 1rem;
     }
 
     h1 {
       font-size: clamp(1.95rem, 1.6962rem + 1.1282vw, 3.05rem);
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
       color: colors.$white;
+
+      p {
+        color: colors.$green;
+      }
     }
 
     p {
@@ -44,10 +47,11 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
     }
 
     .primary {
-      @include typography.subtitle;
+      font-size: clamp(1rem, 0.8929rem + 0.4762vw, 1.25rem);
       padding: 0.75rem 1rem;
       border-radius: 10px;
       box-shadow: 2px 2px 5px rgba(colors.$black, 0.5);
+      align-self: center;
 
       a {
         color: inherit;
@@ -69,6 +73,8 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
 
       .content {
         padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
       }
     }
   }
@@ -99,13 +105,21 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
         margin-bottom: 1rem;
       }
 
+      span.strong {
+        font-weight: 700;
+        color: inherit;
+      }
+
       ul {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        color: colors.$black;
-        padding-left: 1.1rem;
         margin-bottom: 2rem;
+        list-style: none;
+
+        svg {
+          margin-right: 0.5rem;
+        }
       }
 
       .link {
@@ -117,8 +131,10 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(colors.$blue, 0.12);
-      object-fit: cover;
-      aspect-ratio: 4 / 3;
+      &:not(.aprendizados) {
+        object-fit: cover;
+        aspect-ratio: 4 / 3;
+      }
     }
 
     &.aboutKaio {
@@ -242,9 +258,9 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
   }
 
   .Contact {
-    background: colors.$white;
-    padding: 4rem 1rem;
-    color: colors.$black;
+    background: #222;
+    padding: 6rem 1rem;
+    color: colors.$white;
     text-align: center;
 
     .container {
@@ -252,23 +268,74 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       margin: 0 auto;
     }
 
-    h2 {
-      font-size: clamp(1.5rem, 4vw, 2.25rem);
-      margin-bottom: 3rem;
-    }
+    .text {
+      h2 {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        margin-bottom: 0.75rem;
+        color: colors.$white;
+      }
 
-    .form {
-      display: grid;
-      gap: 0.75rem;
+      p {
+        @include typography.body;
+        color: rgba(colors.$white, 0.8);
+        margin-bottom: 1rem;
+      }
+
+      .prices {
+        display: flex;
+        flex-direction: column;
+
+        .oldPrice {
+          font-size: 1.2rem;
+          text-decoration: line-through;
+          color: colors.$red;
+        }
+
+        .newPrice {
+          font-size: 3rem;
+          font-weight: 600;
+          color: colors.$green;
+        }
+      }
+
+      span.strong {
+        font-weight: 700;
+        color: inherit;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        list-style: none;
+
+        svg {
+          margin-right: 0.5rem;
+        }
+      }
     }
 
     button {
-      @include typography.subtitle;
-      font-size: clamp(1.25rem, 0.8929rem + 0.4762vw, 1.563rem);
+      margin-top: 3rem;
+      font-size: clamp(1rem, 0.8929rem + 0.4762vw, 1.25rem);
+      padding: 0.75rem 1rem;
 
       a {
         color: inherit;
         text-decoration: none;
+      }
+    }
+
+    @media(min-width: 40rem) {
+      .button {
+        padding: 1rem 1.5rem;
+      }
+
+      .text .prices {
+        .newPrice {
+          font-size: 5rem;
+        }
       }
     }
   }

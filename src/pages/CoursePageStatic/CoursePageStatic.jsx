@@ -1,3 +1,5 @@
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { memo } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -5,7 +7,8 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Button, ButtonConstants, Image } from '@/components';
-import ebookLogo from '@/images/ebook-logo.png';
+import ebookLogo from '@/images/ansiedade_esporte_ebook.png';
+import controle from '@/images/controle.jpg';
 import kaioImgAbout from '@/images/kaio-hero-section.png';
 import kaioPensando from '@/images/kaio-pensando.png';
 
@@ -28,11 +31,11 @@ const CoursePageStatic = () => {
     <div className={styles.CoursePageStatic} id='coursePageStatic'>
       <section className={styles.HeroSection}>
         <div className={styles.content}>
-          <h1>E-book Ansiedade no Esporte</h1>
-          <p>Método prático e fácil para controlar e medir sua ansiedade antes das competições.</p>
+          <h1>Transforme a Ansiedade em Performance <p>Técnicas comprovadas para atletas de todos os níveis</p></h1>
+          <p>Aprenda métodos práticos, baseados em Psicologia do Esporte, para controlar a ansiedade antes de treinos, jogos e competições para render no seu máximo quando mais importa.</p>
           <Button className={styles.primary} category={ButtonConstants.ButtonCategories.SUCCESS}>
             <a target='_blank' href='https://pay.kiwify.com.br/YY8FoZp'>
-              Adquira agora o seu E-book
+              QUERO CONTROLAR MINHA ANSIEDADE AGORA
             </a>
           </Button>
         </div>
@@ -42,20 +45,38 @@ const CoursePageStatic = () => {
         <div className={styles.container}>
           <Image className={styles.image} src={kaioPensando} alt="Kaio" />
           <div className={styles.text}>
-            <h2>O que você aprenderá com o E-Book</h2>
+            <h2>Por que este e-book existe?</h2>
+            <p>Se você já sentiu o coração acelerar, as mãos suarem, a mente travar ou pensamentos negativos aparecerem momentos antes de competir… você não está sozinho.</p>
+            <p>A ansiedade esportiva afeta atletas de todos os níveis — do iniciante ao profissional.</p>
+            <p>O problema é que, sem técnicas corretas, ela sabota seu desempenho, faz você perder oportunidades e destrói sua confiança.</p>
+            <p>Mas a verdade é: <span className={styles.strong}>ansiedade não é sinal de fraqueza. É um processo psicológico natural que pode ser controlado, treinado e usado ao seu favor.</span></p>
+          </div>
+        </div>
+      </section>
+      <section className={`${styles.About} ${styles.aboutKaio}`}>
+        <div className={styles.container}>
+          <div className={styles.text}>
+            <h2>Você pode aprender a controlar a ansiedade... e este e-book vai te mostrar como!</h2>
+            <p>Neste e-book, você vai descobrir como aplicar técnicas baseadas em Psicologia do Esporte, utilizadas por atletas, assessorias esportivas, psicólogos e grandes centros de treinamento.</p>
+            <p>Tudo explicado de forma simples, prática e direta.</p>
+            <p>Você vai aprender a:</p>
             <ul>
-              <li>Diferença entre ansiedade e transtorno de ansiedade</li>
-              <li>Principais teorias sobre a ansiedade no esporte</li>
-              <li>Como identificar sua ansiedade antes da competição</li>
-              <li>Como controlar a ansiedade na competição</li>
-              <li>Como identificar em seus colegas a ansiedade</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Diferenciar a ansiedade e o transtorno de ansiedade</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Reduzir o nervosismo pré-competição</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Evitar pensamentos que tiram seu foco</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Manter a calma em momentos decisivos</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Treinar seu cérebro para reagir melhor sob pressão</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Melhorar a autoconfiança e o controle emocional</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Transformar ansiedade em energia útil para performance</li>
+              <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Identificar a ansiedade em seus colegas de equipe e poder apoiá-los</li>
             </ul>
           </div>
+          <Image className={`${styles.image} ${styles.aprendizados}`} src={controle} alt="Aprendizados" />
         </div>
       </section>
       <section className={styles.Services}>
         <div className={styles.container}>
-          <h2>Para quem é o E-book</h2>
+          <h2>Para quem é o e-book?</h2>
           <div className={styles.grid}>
             {itemsTargetAudience.map((item, i) => (
               <article key={i} className={styles.card}>
@@ -68,7 +89,7 @@ const CoursePageStatic = () => {
       </section>
       <section className={styles.Testimonials}>
         <div className={styles.container}>
-          <h2>Depoimentos</h2>
+          <h2>Por que atletas e treinadores confiam nessas técnicas?</h2>
           <Swiper
             modules={[ Pagination, Autoplay ]}
             pagination={{ clickable: true }}
@@ -93,12 +114,22 @@ const CoursePageStatic = () => {
       </section>
       <section className={styles.Contact}>
         <div className={styles.container}>
-          <h2>Pronto para melhorar o seu rendimento?</h2>
-          <Button className={styles.button} category={ButtonConstants.ButtonCategories.SUCCESS}>
-            <a target='_blank' href='https://pay.kiwify.com.br/YY8FoZp'>
-              Adquira agora o seu E-Book
-            </a>
-          </Button>
+          <div className={styles.text}>
+            <h2>Pronto para melhorar o seu rendimento?</h2>
+            <div>
+              <p className={styles.prices}>Preço original: <span className={styles.oldPrice}>R$ 79,90</span></p>
+              <p className={styles.prices}>Preço promocional: <span className={styles.newPrice}>R$ 37,90</span></p>
+            </div>
+
+            <p><FontAwesomeIcon icon={faCheck} color='#22A442' /> Acesso imediato</p>
+            <p><FontAwesomeIcon icon={faCheck} color='#22A442' /> Arquivo PDF (celular, tablet ou computador)</p>
+
+            <Button className={styles.button} category={ButtonConstants.ButtonCategories.SUCCESS}>
+              <a target='_blank' href='https://pay.kiwify.com.br/YY8FoZp'>
+                QUERO CONTROLAR MINHA ANSIEDADE AGORA
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
       <section className={`${styles.About} ${styles.aboutKaio}`}>
@@ -107,7 +138,7 @@ const CoursePageStatic = () => {
             <h2>Quem é o Kaio?!</h2>
             <p>Formado em Educação Física pela Unicamp, especialista, mestre e doutorando. Atua na área como personal trainer, treinador de basquete, consultor de performance esportiva e pesquisador.</p>
             <p>Pesquisa a mais de uma década sobre Psicologia do Esporte.</p>
-            <p>Criador da <strong>única</strong> ferramenta no Brasil que quantifica de forma rápida e eficiente a ansiedade pré-competitiva, o <a target='_blank' href='https://ansiedometro-atleta.vercel.app/'>Ansiedômetro</a></p>
+            <p>Criador da <span className={styles.strong}>única</span> ferramenta no Brasil que quantifica de forma rápida e eficiente a ansiedade pré-competitiva, o <a target='_blank' href='https://ansiedometro-atleta.vercel.app/'>Ansiedômetro</a></p>
           </div>
           <Image className={styles.image} src={kaioImgAbout} alt="Kaio" />
         </div>
