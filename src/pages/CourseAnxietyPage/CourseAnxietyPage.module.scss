@@ -1,6 +1,7 @@
 @use '@/styles/spacing';
 @use '@/styles/typography';
 @use '@/styles/colors';
+@use '@/styles/mixins';
 @use '@/styles/screen-sizes.scss' as screenSizes;
 
 $remove-horizontal-spacing: spacing.$content-container-horizontal-sm * -1;
@@ -17,7 +18,7 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
     display: grid;
     place-items: center;
     text-align: center;
-    background: #0a5f7e; //linear-gradient(120deg, colors.$dark-blue 0%, #0a5f7e 60%, colors.$dark-blue 100%);
+    background: linear-gradient(120deg, colors.$dark-blue 0%, #0a5f7e 70%, colors.$dark-blue 100%);
     padding: 4rem 0;
 
     .content {
@@ -30,6 +31,10 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       font-size: clamp(1.95rem, 1.6962rem + 1.1282vw, 3.05rem);
       margin-bottom: 1rem;
       color: colors.$white;
+
+      span {
+        color: rgb(6 182 212);
+      }
     }
 
     p {
@@ -44,10 +49,15 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
     }
 
     .primary {
+      background-color: rgb(14 162 113);
       @include typography.subtitle;
       padding: 0.75rem 1rem;
       border-radius: 10px;
       box-shadow: 2px 2px 5px rgba(colors.$black, 0.5);
+
+      &:hover {
+        background-color: mixins.hoverColor(rgb(14 162 113));
+      }
 
       a {
         color: inherit;
@@ -75,7 +85,7 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
 
   .About {
     padding: 4rem 1rem;
-    background: colors.$white;
+    background: rgb(19 37 54);
 
     .container {
       display: grid;
@@ -90,26 +100,34 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       h2 {
         font-size: clamp(1.5rem, 4vw, 2.25rem);
         margin-bottom: 0.75rem;
-        color: colors.$black;
+        color: colors.$white;
       }
 
       p {
         @include typography.body;
-        color: rgba(colors.$black, 0.8);
         margin-bottom: 1rem;
+        color: colors.$white;
+      }
+
+      span.strong, a {
+        color: colors.$green;
+        font-weight: 700;
       }
 
       ul {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        color: colors.$black;
-        padding-left: 1.1rem;
         margin-bottom: 2rem;
-      }
+        list-style: none;
 
-      .link {
-        color: colors.$red;
+        li {
+          color: colors.$white;
+        }
+        
+        svg {
+          margin-right: 0.5rem;
+        }
       }
     }
 
@@ -139,9 +157,8 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
   }
 
   .Services {
-    background: colors.$light-gray;
+    background: rgb(27, 55, 82);
     padding: 4rem 1rem;
-    color: colors.$black;
 
     .container {
       max-width: 1200px;
@@ -151,6 +168,7 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
     h2 {
       font-size: clamp(1.5rem, 4vw, 2.25rem);
       margin-bottom: 1.5rem;
+      color: colors.$white;
     }
 
     .grid {
@@ -185,7 +203,7 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
 
   .Testimonials {
     padding: 4rem 1rem;
-    background: linear-gradient(180deg, colors.$dark-blue 0%, #0a5f7e 60%, colors.$blue 100%);
+    background: rgb(19, 37, 54);
 
     .container {
       max-width: 1200px;
@@ -242,9 +260,9 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
   }
 
   .Contact {
-    background: colors.$white;
-    padding: 4rem 1rem;
-    color: colors.$black;
+    background: #222;
+    padding: 6rem 1rem;
+    color: colors.$white;
     text-align: center;
 
     .container {
@@ -252,9 +270,57 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       margin: 0 auto;
     }
 
-    h2 {
-      font-size: clamp(1.5rem, 4vw, 2.25rem);
-      margin-bottom: 3rem;
+    .text {
+      h2 {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        margin-bottom: 0.75rem;
+        color: colors.$white;
+      }
+
+      h3 {
+        color: colors.$white;
+        margin-bottom: 2rem;
+      }
+
+      p {
+        @include typography.body;
+        color: rgba(colors.$white, 0.8);
+        margin-bottom: 1rem;
+      }
+
+      .prices {
+        display: flex;
+        flex-direction: column;
+
+        .oldPrice {
+          font-size: 1.2rem;
+          text-decoration: line-through;
+          color: colors.$red;
+        }
+
+        .newPrice {
+          font-size: 3rem;
+          font-weight: 600;
+          color: colors.$green;
+        }
+      }
+
+      span.strong {
+        font-weight: 700;
+        color: inherit;
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        list-style: none;
+
+        svg {
+          margin-right: 0.5rem;
+        }
+      }
     }
 
     .form {
@@ -262,13 +328,138 @@ $remove-vertical-spacing: spacing.$content-container-vertical-sm * -1;
       gap: 0.75rem;
     }
 
-    button {
+    .primary {
+      background-color: rgb(14 162 113);
       @include typography.subtitle;
-      font-size: clamp(1.25rem, 0.8929rem + 0.4762vw, 1.563rem);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(colors.$black, 0.5);
+
+      &:hover {
+        background-color: mixins.hoverColor(rgb(14 162 113));
+      }
 
       a {
         color: inherit;
         text-decoration: none;
+      }
+    }
+  }
+  
+  .Modules {
+    background: #0B1B2B;
+    padding: 4rem 1rem;
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .sectionHeader {
+      text-align: center;
+      margin-bottom: 3rem;
+
+      h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: colors.$white;
+      }
+
+      p {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        font-weight: bold;
+        color: colors.$white;
+      }
+    }
+
+    .modulesGrid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .module {
+      display: flex;
+      background: #1F2F3D;
+      border: 1px solid rgba(230, 230, 230, 0.5);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: 0.3s;
+
+      &:hover {
+        transform: scale(1.02);
+        border-color: colors.$blue;
+        box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
+      }
+
+      .moduleImage {
+        position: relative;
+        width: 160px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .badge {
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          background: #06B6D4;
+          width: 40px;
+          height: 40px;
+          border-radius: 0.8rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #0B1B2B;
+          font-weight: 900;
+          font-size: 1.2rem;
+        }
+      }
+
+      .moduleContent {
+        padding: 1.5rem;
+
+        h3 {
+          font-size: clamp(1rem, 1.1429rem + 0.4762vw, 1.5rem);
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+          color: colors.$white;
+        }
+
+        p {
+          opacity: 0.9;
+          line-height: 1.5;
+          color: colors.$white;
+        }
+      }
+    }
+
+    .ctaWrapper {
+      text-align: center;
+      margin-top: 3rem;
+
+      .cta {
+        background: #10B981;
+        color: colors.$white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background: #0EA271;
+        }
+        
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
       }
     }
   }

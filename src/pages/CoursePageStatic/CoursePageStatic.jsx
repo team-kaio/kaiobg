@@ -43,7 +43,7 @@ const CoursePageStatic = () => {
       </section>
       <section className={styles.About}>
         <div className={styles.container}>
-          <Image className={styles.image} src={kaioPensando} alt="Kaio" />
+          <Image className={styles.image} src="https://images.unsplash.com/photo-1759787851041-0d45d2b2db84?w=600&fm=webp&q=80" alt="Jogadora de vôlei com ansiedade" />
           <div className={styles.text}>
             <h2>Por que este e-book existe?</h2>
             <p>Se você já sentiu o coração acelerar, as mãos suarem, a mente travar ou pensamentos negativos aparecerem momentos antes de competir… você não está sozinho.</p>
