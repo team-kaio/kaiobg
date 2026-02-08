@@ -61,6 +61,44 @@ const WorkoutExercises = (props) => {
           setWorkoutProperty('exercises', updatedExercises);
         };
 
+        const onMoveUpExercise = () => {
+          const exerciseIndex = exercises.findIndex(e => e.id == exercise.id);
+
+          if(exerciseIndex === 0) {
+            return;
+          }
+
+          const previousExercise = exercises[exerciseIndex - 1];
+
+          const updatedExercises = [
+            ...exercises.slice(0, exerciseIndex - 1),
+            exercise,
+            previousExercise,
+            ...exercises.slice(exerciseIndex + 1),
+          ];
+
+          setWorkoutProperty('exercises', updatedExercises);
+        };
+
+        const onMoveDownExercise = () => {
+          const exerciseIndex = exercises.findIndex(e => e.id == exercise.id);
+
+          if(exerciseIndex >= (exercises.length - 1)) {
+            return;
+          }
+
+          const nextExercise = exercises[exerciseIndex + 1];
+
+          const updatedExercises = [
+            ...exercises.slice(0, exerciseIndex),
+            nextExercise,
+            exercise,
+            ...exercises.slice(exerciseIndex + 2),
+          ];
+
+          setWorkoutProperty('exercises', updatedExercises);
+        };
+
         const onRemoveExercise = () => {
           const exerciseIndex = exercises.findIndex(e => e.id == exercise.id);
 
@@ -81,6 +119,8 @@ const WorkoutExercises = (props) => {
             mode={mode}
             setExerciseProperty={setExerciseProperty}
             onRemoveExercise={onRemoveExercise}
+            onMoveUpExercise={onMoveUpExercise}
+            onMoveDownExercise={onMoveDownExercise}
           />
         );
       })}

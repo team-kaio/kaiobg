@@ -6,7 +6,7 @@ import { ExerciseHeader } from './ExerciseHeader';
 import styles from './Exercise.module.scss';
 
 const Exercise = (props) => {
-  const { onChangeExerciseStatus, setExerciseProperty, onRemoveExercise } = props;
+  const { onChangeExerciseStatus, setExerciseProperty, onRemoveExercise, onMoveUpExercise, onMoveDownExercise } = props;
   const { exercise, completedExercises, mode } = props;
 
   const [ isExpanded, setIsExpanded ] = useState(false);
@@ -41,6 +41,8 @@ const Exercise = (props) => {
         mode={mode}
         setExerciseProperty={setExerciseProperty}
         onRemoveExercise={onRemoveExercise}
+        onMoveUpExercise={onMoveUpExercise}
+        onMoveDownExercise={onMoveDownExercise}
       />
 
       {renderExerciseBody()}

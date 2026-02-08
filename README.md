@@ -1,9 +1,12 @@
 # Kaio Borges Guerrero 
 
 OK:
+-Poder movimentar os treinos e exercicios de lugar quando estiver montando
+
+Em andamento:
+
 
 Pendente:
--Poder movimentar os treinos e exercicios de lugar quando estiver montando
 -Fazer o histórico dos alunos
 -Colocar um "treino em branco" igual a nathi fez no dela
 -Organizar e deixar os "artigos" mais bonitos

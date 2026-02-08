@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ExpandCollapseArrow, RemoveIconButton, RemoveWorkoutExerciseConfirmDialog, Select, WorkoutConstants } from '@/components';
+import { ExpandCollapseArrow, RemoveIconButton, RemoveWorkoutExerciseConfirmDialog, Select, WorkoutConstants, MoveUpButton, MoveDownButton } from '@/components';
 import { FIXED_EXERCISES, FIXED_EXERCISES_LIST } from '@/constants';
 import { ExerciseSlice } from '@/store/slices';
 
@@ -9,7 +9,7 @@ import styles from './ExerciseHeader.module.scss';
 
 const ExerciseHeader = (props) => {
   const { isExpanded, exercise, mode } = props;
-  const { onChangeExpandedState, setExerciseProperty, onRemoveExercise } = props;
+  const { onChangeExpandedState, setExerciseProperty, onRemoveExercise, onMoveUpExercise, onMoveDownExercise } = props;
 
   const removeWorkoutExerciseDialogFnsRef = useRef(null);
 
@@ -38,6 +38,14 @@ const ExerciseHeader = (props) => {
 
     return (
       <>
+        <MoveUpButton
+          onClick={onMoveUpExercise}
+        />
+
+        <MoveDownButton
+          onClick={onMoveDownExercise}
+        />
+        
         <Select
           name="exercises"
           emptyItemText="Select an exercise"
@@ -51,7 +59,7 @@ const ExerciseHeader = (props) => {
         />
       </>
     );
-  }, [ dbExercises, exercise.exerciseId, onChangeSelectedExercise, onClickRemoveExerciseButton ]);
+  }, [ dbExercises, exercise.exerciseId, onChangeSelectedExercise, onClickRemoveExerciseButton, onMoveDownExercise, onMoveUpExercise ]);
 
   const renderExercise = useCallback(() => {
     if(mode != WorkoutConstants.WORKOUT_MODES.EDIT) {

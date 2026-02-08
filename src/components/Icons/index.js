@@ -1,4 +1,6 @@
+export * from './ArrowDownLongIcon';
 export * from './ArrowLeftLongIcon';
+export * from './ArrowUpLongIcon';
 export * from './BarsIcon';
 export * from './CalendarIcon';
 export * from './CameraIcon';
