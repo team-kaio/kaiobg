@@ -8,6 +8,7 @@ Em andamento:
 
 
 Pendente:
+- Corrigir isso: https://github.com/advisories/GHSA-fv7c-fp4j-7gwp
 -Fazer o histórico dos alunos
 -Organizar e deixar os "artigos" mais bonitos
 -Poder colocar os testes (que hoje estão no forms) direto na plataforma
