@@ -2,13 +2,13 @@
 
 OK:
 -Poder movimentar os treinos e exercicios de lugar quando estiver montando
+-Colocar um "treino em branco" igual a nathi fez no dela
 
 Em andamento:
 
 
 Pendente:
 -Fazer o histórico dos alunos
--Colocar um "treino em branco" igual a nathi fez no dela
 -Organizar e deixar os "artigos" mais bonitos
 -Poder colocar os testes (que hoje estão no forms) direto na plataforma
 -Termos uma aba de resultado dos testes
