@@ -14,6 +14,15 @@ const WorkoutPage = () => {
   const athleteId = searchParams.get('uid') || null;
 
   const workouts = useSelector(athleteId ? UserSlice.selectors.selectUserWorkoutsByUid(athleteId) : UserSlice.selectors.selectLoggedUserWorkouts);
+  const workoutsWithExtra = workouts ? [
+    ...workouts,
+    {
+      id: 'extra-activities',
+      title: t('Extra Activity Log'),
+      description: t('Any physical activity that is not part of the training sessions'),
+      exercises: [],
+    },
+  ] : [];
 
   return (
     <>
@@ -22,7 +31,7 @@ const WorkoutPage = () => {
       {
         workouts ? (
           <WorkoutsList
-            workouts={workouts}
+            workouts={workoutsWithExtra}
             mode={WorkoutConstants.WORKOUT_MODES.REGISTER}
           />
         ) : <></>

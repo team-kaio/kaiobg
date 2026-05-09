@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { WORKOUT_MODES } from './constants';
 import { WorkoutExercises } from './WorkoutExercises';
 import { WorkoutFooter } from './WorkoutFooter';
 import { WorkoutHeader } from './WorkoutHeader';
@@ -8,7 +9,7 @@ import { WorkoutHeader } from './WorkoutHeader';
 import styles from './Workout.module.scss';
 
 const Workout = (props) => {
-  const { workout, mode, isExpanded: initialIsExpanded = true } = props;
+  const { workout, mode, isExpanded: initialIsExpanded = false } = props;
   const { setWorkoutProperty = () => null, onRemoveWorkout = () => null } = props;
 
   const navigate = useNavigate();
@@ -62,22 +63,37 @@ const Workout = (props) => {
       />
 
       <div style={{ display: isExpanded ? 'block' : 'none' }}>
-        <WorkoutExercises
-          exercises={workout.exercises}
-          completedExercises={completedExercises}
-          onChangeExerciseStatus={onChangeExerciseStatus}
-          mode={mode}
-          setWorkoutProperty={setWorkoutProperty}
-        />
+        {workout.exercises.length ? (
+          <WorkoutExercises
+            exercises={workout.exercises}
+            completedExercises={completedExercises}
+            onChangeExerciseStatus={onChangeExerciseStatus}
+            mode={mode}
+            setWorkoutProperty={setWorkoutProperty}
+          />
+        ) : <></>}
+
+        {mode === WORKOUT_MODES.REGISTER ? (
+          <WorkoutFooter
+            workout={workout}
+            completedExercises={completedExercises}
+            mode={mode}
+            onRemoveWorkout={onRemoveWorkout}
+            onCompleteWorkout={onCompleteWorkout}
+          />
+        ) : <></>}
       </div>
 
-      <WorkoutFooter
-        workout={workout}
-        completedExercises={completedExercises}
-        mode={mode}
-        onRemoveWorkout={onRemoveWorkout}
-        onCompleteWorkout={onCompleteWorkout}
-      />
+      {mode != WORKOUT_MODES.REGISTER ? (
+        <WorkoutFooter
+          workout={workout}
+          completedExercises={completedExercises}
+          mode={mode}
+          onRemoveWorkout={onRemoveWorkout}
+          onCompleteWorkout={onCompleteWorkout}
+        />
+      ) : <></>}
+
     </div>
   );
 };
