@@ -63,15 +63,13 @@ const Workout = (props) => {
       />
 
       <div style={{ display: isExpanded ? 'block' : 'none' }}>
-        {workout.exercises.length ? (
-          <WorkoutExercises
-            exercises={workout.exercises}
-            completedExercises={completedExercises}
-            onChangeExerciseStatus={onChangeExerciseStatus}
-            mode={mode}
-            setWorkoutProperty={setWorkoutProperty}
-          />
-        ) : <></>}
+        <WorkoutExercises
+          exercises={workout.exercises}
+          completedExercises={completedExercises}
+          onChangeExerciseStatus={onChangeExerciseStatus}
+          mode={mode}
+          setWorkoutProperty={setWorkoutProperty}
+        />
 
         {mode === WORKOUT_MODES.REGISTER ? (
           <WorkoutFooter
