@@ -7,10 +7,6 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Button, ButtonConstants, Image } from '@/components';
-import ebookLogo from '@/images/ansiedade_esporte_ebook.png';
-import controle from '@/images/controle.jpg';
-import kaioImgAbout from '@/images/kaio-hero-section.png';
-import kaioPensando from '@/images/kaio-pensando.png';
 
 import styles from './CoursePageStatic.module.scss';
 
@@ -39,7 +35,7 @@ const CoursePageStatic = () => {
             </a>
           </Button>
         </div>
-        <Image className={styles.img} src={ebookLogo} width='300px' />
+        <Image className={styles.img} src="/images/ansiedade_esporte_ebook.png" width='300px' />
       </section>
       <section className={styles.About}>
         <div className={styles.container}>
@@ -71,7 +67,7 @@ const CoursePageStatic = () => {
               <li><FontAwesomeIcon icon={faCheck} color='#22A442' /> Identificar a ansiedade em seus colegas de equipe e poder apoiá-los</li>
             </ul>
           </div>
-          <Image className={`${styles.image} ${styles.aprendizados}`} src={controle} alt="Aprendizados" />
+          <Image className={`${styles.image} ${styles.aprendizados}`} src="/images/controle.jpg" alt="Aprendizados" />
         </div>
       </section>
       <section className={styles.Services}>
@@ -140,7 +136,7 @@ const CoursePageStatic = () => {
             <p>Pesquisa a mais de uma década sobre Psicologia do Esporte.</p>
             <p>Criador da <span className={styles.strong}>única</span> ferramenta no Brasil que quantifica de forma rápida e eficiente a ansiedade pré-competitiva, o <a target='_blank' href='https://ansiedometro-atleta.vercel.app/'>Ansiedômetro</a></p>
           </div>
-          <Image className={styles.image} src={kaioImgAbout} alt="Kaio" />
+          <Image className={styles.image} src="/images/kaio-hero-section.png" alt="Kaio" />
         </div>
       </section>
     </div>

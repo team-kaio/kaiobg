@@ -2,7 +2,6 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, ButtonConstants, Image } from '@/components';
-import kaioImg from '@/images/kaio-hero-section.png';
 
 import styles from './HeroSection.module.scss';
 
@@ -20,7 +19,7 @@ const HeroSection = () => {
           </a>
         </Button>
       </div>
-      <Image className={styles.img} src={kaioImg} width='320px' />
+      <Image className={styles.img} src="/images/kaio-hero-section.png" width='320px' />
     </section>
   );
 };

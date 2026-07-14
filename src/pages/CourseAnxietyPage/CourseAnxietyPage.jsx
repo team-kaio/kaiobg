@@ -9,8 +9,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 
 import { Button, ButtonConstants, Image } from '@/components';
-import kaioImgAbout from '@/images/kaio-hero-section.png';
-import runnersImg from '@/images/runners.jpg';
 
 import styles from './CourseAnxietyPage.module.scss';
 
@@ -47,7 +45,7 @@ const CourseAnxietyPage = () => {
       </section>
       <section className={styles.About}>
         <div className={styles.container}>
-          <Image className={styles.image} src={runnersImg} alt="Conquista" />
+          <Image className={styles.image} src="/images/runners.jpg" alt="Conquista" />
           <div className={styles.text}>
             <h2>📚 O QUE VOCÊ VAI APRENDER</h2>
             <p>Você vai descobrir como aplicar técnicas baseadas em Psicologia do Esporte, utilizadas por atletas, assessorias esportivas, psicólogos e grandes centros de treinamento.</p>
@@ -235,7 +233,7 @@ const CourseAnxietyPage = () => {
             <p>Pesquisa a mais de uma década sobre Psicologia do Esporte.</p>
             <p>Criador da <span className={styles.strong}>única</span> ferramenta no Brasil que quantifica de forma rápida e eficiente a ansiedade pré-competitiva, o <a target='_blank' href='https://ansiedometro-atleta.vercel.app/'>Ansiedômetro</a></p>
           </div>
-          <Image className={styles.image} src={kaioImgAbout} alt="Kaio" />
+          <Image className={styles.image} src="/images/kaio-hero-section.png" alt="Kaio" />
         </div>
       </section>
     </div>

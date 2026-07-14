@@ -22,6 +22,23 @@ export const deepClone = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
 
+export async function fetchArticleContent(url) {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load article: ${response.status}`);
+  }
+
+  const html = await response.text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  const styles = [ ...doc.head.querySelectorAll('style') ]
+    .map((node) => node.outerHTML)
+    .join('');
+
+  return `${styles}${doc.body.innerHTML}`;
+}
+
 export const getContentByUserLanguages = (publication) => {
   const userLanguagesList = getUserMainLanguagesList();
 
@@ -132,4 +149,22 @@ export const isArrayEmpty = (array) => {
   }
 
   return array.length == 0;
+};
+
+export const normalizeArticlePath = (path) => {
+  if(!path || typeof path !== 'string') {
+    return path;
+  }
+
+  const trimmed = path.trim();
+
+  if(!trimmed) {
+    return trimmed;
+  }
+
+  if(trimmed.startsWith('/')) {
+    return trimmed;
+  }
+
+  return `/${trimmed}`;
 };

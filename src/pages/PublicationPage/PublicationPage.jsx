@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router';
 
-import { ArrowLeftLongIcon, Button } from '@/components';
+import { ArticleContent, ArrowLeftLongIcon, Button } from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { PublicationSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -12,7 +12,7 @@ import styles from './PublicationPage.module.scss';
 
 const PublicationPage = () => {
   const { t } = useTranslation();
-  
+
   const dispatch = useDispatch();
 
   const [ searchParams ] = useSearchParams();
@@ -30,11 +30,14 @@ const PublicationPage = () => {
     return false;
   }, [ loadPublicationsStatus ]);
 
-  const content = useMemo(() => {
+  const articlePath = useMemo(() => {
     if(!publication) {
       return null;
     }
-    return utils.getContentByUserLanguages(publication);
+
+    const path = utils.getContentByUserLanguages(publication);
+
+    return path ? utils.normalizeArticlePath(path) : null;
   }, [ publication ]);
 
   const title = useMemo(() => {
@@ -60,11 +63,17 @@ const PublicationPage = () => {
               <p className={styles.date}>{utils.getDateFormatted(new Date(publication.createdAt), { weekday: 'long' })}</p>
             </div>
 
-            <div
-              className={styles.PublicationCardContent}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
-            
+            {
+              articlePath ? (
+                <ArticleContent
+                  path={articlePath}
+                  className={styles.PublicationCardContent}
+                />
+              ) : (
+                <p>{t('Publication not found')}</p>
+              )
+            }
+
             <Link className={styles.btnBack} to={{ pathname: '/publications' }}>
               <Button>
                 <ArrowLeftLongIcon />
@@ -72,7 +81,17 @@ const PublicationPage = () => {
               </Button>
             </Link>
           </>
-        ) : <p>{t(isPublicationLoading ? 'Loading...' : 'Publication not found')}</p>
+        ) : (
+          <>
+            <p>{t(isPublicationLoading ? 'Loading...' : 'Publication not found')}</p>
+            <Link className={styles.btnBack} to={{ pathname: '/publications' }}>
+              <Button>
+                <ArrowLeftLongIcon />
+                {t('Back')}
+              </Button>
+            </Link>
+          </>
+        )
       }
     </div>
   );

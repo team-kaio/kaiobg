@@ -1,4 +1,5 @@
 export * from './ActionCard';
+export * from './ArticleContent';
 export * from './AvatarPlaceholder';
 export * from './Button';
 export * from './Buttons';

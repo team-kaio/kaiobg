@@ -14,7 +14,6 @@ import styles from './PublicationItem.module.scss';
 const PublicationItem = (props) => {
   const { item: originalItem } = props;
 
-  const quillRef = useRef(null);
   const removePublicationDialogFnsRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -41,20 +40,21 @@ const PublicationItem = (props) => {
   }, []);
 
   const onSaveEdit = useCallback(() => {
-    const quillValue = quillRef.current.innerHTML;
-    const updatedContent = {
-      ...item.content,
-      [selectedLanguage]: quillValue,
-    };
+    const normalizedContent = Object.fromEntries(
+      Object.entries(item.content).map(([ language, path ]) => {
+        return [ language, utils.normalizeArticlePath(path) ];
+      }),
+    );
+
     const updatedItem = {
       ...item,
-      content: updatedContent,
+      content: normalizedContent,
     };
 
     dispatch(PublicationSlice.actions.savePublication(updatedItem));
 
     setItem(updatedItem);
-  }, [ dispatch, item, selectedLanguage ]);
+  }, [ dispatch, item ]);
 
   const onPublish = useCallback((updatedIsPublished) => {
     const updatedItem = {
@@ -85,7 +85,6 @@ const PublicationItem = (props) => {
 
       <div style={{ display: isExpanded ? 'block' : 'none' }}>
         <PublicationItemBody
-          quillRef={quillRef}
           item={item}
           selectedLanguage={selectedLanguage}
           editMode={editMode}

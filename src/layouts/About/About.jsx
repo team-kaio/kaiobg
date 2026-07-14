@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { Image } from '@/components';
-import teamKaioImg from '@/images/kaio-aulao.jpg';
 
 import styles from './About.module.scss';
 
@@ -24,7 +23,7 @@ const About = () => {
           </ul>
           <Link className={styles.link} to={{ pathname: '/resume' }}>{t('Learn More About Me')}</Link>
         </div>
-        <Image className={styles.image} src={teamKaioImg} alt={t('Team Kaio')} />
+        <Image className={styles.image} src="/images/kaio-aulao.jpg" alt={t('Team Kaio')} />
       </div>
     </section>
   );
