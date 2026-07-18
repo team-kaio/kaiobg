@@ -1,37 +1,53 @@
-name: Build On Push
+name: Build and Deploy
 
 on:
   push:
     branches:
       - master
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-project:
-    # 2. Choose the operating system runner
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      # 3. Download your repository code into the runner
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 4. Set up the language environment (Node.js example)
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
+          cache: 'yarn'
 
-      # 5. Install your project dependencies
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
-      # 6. Run your project build script
-      - name: Run build
-        run: yarn run build
+      - name: Build project
+        run: yarn build
 
-      # 7. Deploy the project
-      - name: Deploy
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          yarn run deploy
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Use 'dist' if you use Vite, or 'build' if you use Create React App
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
