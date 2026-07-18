@@ -29,12 +29,9 @@ jobs:
       - name: Run build
         run: yarn run build
 
-      # 7. Configure Git identity for deployment
-      - name: Configure Git identity
+      # 7. Deploy the project
+      - name: Deploy
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-
-      # 8. Deploy the project
-      - name: Deploy
-        run: yarn run deploy
+          yarn run deploy
