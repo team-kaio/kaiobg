@@ -9,7 +9,6 @@ Pendente:
 - eu nao consigo adicionar exercicio pelo celular, não sei se é conexão por ser diferente e tal (não é algo que precisa mudar, mas acho legal vcs saberem)
 - Fazer histórico de TREINO, não check-in
 - (esse seria legal se tiver): uma opção no perfil do atleta de medidas, junto com check-in e treinos as medidas que eu faço na avaliação, e um lugar para postar fotos de frente, de lado e de costas, como forma de avaliação.
-- publicacoes e cursos eu vou mexer essa semana e adicionar, depois disso eu falo
 
 
 - A parte de cursos deveria, na verdade redirecionar para as páginas personalizadas de cursos (Não ser como os artigos)
