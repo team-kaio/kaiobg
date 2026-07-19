@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router';
 
-import { ArrowLeftLongIcon, Button } from '@/components';
+import { ArticleContent, ArrowLeftLongIcon, Button } from '@/components';
 import { REQUEST_STATUS } from '@/constants';
 import { CourseSlice } from '@/store/slices';
 import { utils } from '@/utils';
@@ -12,7 +12,7 @@ import styles from './CoursePage.module.scss';
 
 const CoursePage = () => {
   const { t } = useTranslation();
-  
+
   const dispatch = useDispatch();
 
   const [ searchParams ] = useSearchParams();
@@ -30,11 +30,22 @@ const CoursePage = () => {
     return false;
   }, [ loadCoursesStatus ]);
 
-  const content = useMemo(() => {
+  const coursePath = useMemo(() => {
     if(!course) {
       return null;
     }
-    return utils.getContentByUserLanguages(course);
+
+    let path = utils.getContentByUserLanguages(course);
+
+    if(path && !path.startsWith('http')) {
+      if(!path.startsWith('/courses/')) {
+        const title = utils.getTitleByUserLanguages(course);
+        const sanitizedTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        path = `/courses/${course.id}-${sanitizedTitle}.html`;
+      }
+    }
+
+    return path ? utils.normalizeArticlePath(path) : null;
   }, [ course ]);
 
   const title = useMemo(() => {
@@ -60,20 +71,28 @@ const CoursePage = () => {
               <p className={styles.date}>{utils.getDateFormatted(new Date(course.createdAt), { weekday: 'long' })}</p>
             </div>
 
-            <div
-              className={styles.CourseCardContent}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
-            
-            <Link className={styles.btnBack} to={{ pathname: '/courses' }}>
-              <Button>
-                <ArrowLeftLongIcon />
-                {t('Back')}
-              </Button>
-            </Link>
+            {
+              coursePath ? (
+                <ArticleContent
+                  path={coursePath}
+                  className={styles.CourseCardContent}
+                />
+              ) : (
+                <p>{t('Course content not available')}</p>
+              )
+            }
           </>
-        ) : <p>{t(isCourseLoading ? 'Loading...' : 'Course not found')}</p>
+        ) : (
+          <p>{t(isCourseLoading ? 'Loading...' : 'Course not found')}</p>
+        )
       }
+      
+      <Link className={styles.btnBack} to={{ pathname: '/courses' }}>
+        <Button>
+          <ArrowLeftLongIcon />
+          {t('Back')}
+        </Button>
+      </Link>
     </div>
   );
 };

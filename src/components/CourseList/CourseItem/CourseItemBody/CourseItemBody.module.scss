@@ -3,4 +3,22 @@
 .CourseItemBody {
   padding: 1rem;
   border-top: 1px solid colors.$light-gray;
+
+  .articlePreview {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .articlePath {
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: colors.$gray;
+    word-break: break-all;
+  }
+
+  .articleContent {
+    border-top: 1px solid colors.$light-gray;
+    padding-top: 1rem;
+  }
 }

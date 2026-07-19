@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, ButtonConstants } from '@/components/Button';
@@ -16,24 +16,32 @@ const CourseItemFooter = (props) => {
     onPublish = () => null,
     onRemoveCourse = () => null,
     onSaveEdit = () => null,
-    onUpdateItemProperty = () => null,
     setEditMode = () => null,
     setSelectedLanguage = () => null,
   } = props;
 
   const { t } = useTranslation();
 
-  const onClickRemoveLanguage = useCallback(() => {
-    const { [selectedLanguage]: _, ...otherContents } = item.content;
-
-    onUpdateItemProperty('content', otherContents);
-  }, [ item.content, onUpdateItemProperty, selectedLanguage ]);
+  const [ isSaving, setIsSaving ] = useState(false);
 
   const renderEditMode = useCallback(() => {
+    const handleSaveClick = async () => {
+      setIsSaving(true);
+      try {
+        await onSaveEdit();
+        setEditMode(false);
+      } finally {
+        setIsSaving(false);
+      }
+    };
+
     return (
       <>
         <div>
-          <SaveButton onClick={onSaveEdit} />
+          <SaveButton
+            onClick={handleSaveClick}
+            disabled={isSaving}
+          />
         </div>
 
         <div>
@@ -44,18 +52,10 @@ const CourseItemFooter = (props) => {
           >
             {t('Cancel')}
           </Button>
-
-          <Button
-            category={ButtonConstants.ButtonCategories.DANGER}
-            icon={<XIcon />}
-            onClick={onClickRemoveLanguage}
-          >
-            {t('Remove Language')}
-          </Button>
         </div>
       </>
     );
-  }, [ onCancelEdit, onClickRemoveLanguage, onSaveEdit, t ]);
+  }, [ onCancelEdit, onSaveEdit, setEditMode, t, isSaving ]);
 
   const renderViewMode = useCallback(() => {
     const renderLanguages = () => {

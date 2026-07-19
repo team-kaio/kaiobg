@@ -14,7 +14,6 @@ import styles from './CourseItem.module.scss';
 const CourseItem = (props) => {
   const { item: originalItem } = props;
 
-  const quillRef = useRef(null);
   const removeCourseDialogFnsRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -41,20 +40,21 @@ const CourseItem = (props) => {
   }, []);
 
   const onSaveEdit = useCallback(() => {
-    const quillValue = quillRef.current.innerHTML;
-    const updatedContent = {
-      ...item.content,
-      [selectedLanguage]: quillValue,
-    };
+    const normalizedContent = Object.fromEntries(
+      Object.entries(item.content).map(([ language, path ]) => {
+        return [ language, utils.normalizeArticlePath(path) ];
+      }),
+    );
+
     const updatedItem = {
       ...item,
-      content: updatedContent,
+      content: normalizedContent,
     };
 
     dispatch(CourseSlice.actions.saveCourse(updatedItem));
 
     setItem(updatedItem);
-  }, [ dispatch, item, selectedLanguage ]);
+  }, [ dispatch, item ]);
 
   const onPublish = useCallback((updatedIsPublished) => {
     const updatedItem = {
@@ -85,7 +85,6 @@ const CourseItem = (props) => {
 
       <div style={{ display: isExpanded ? 'block' : 'none' }}>
         <CourseItemBody
-          quillRef={quillRef}
           item={item}
           selectedLanguage={selectedLanguage}
           editMode={editMode}

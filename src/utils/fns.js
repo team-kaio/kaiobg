@@ -39,16 +39,16 @@ export async function fetchArticleContent(url) {
   return `${styles}${doc.body.innerHTML}`;
 }
 
-export const getContentByUserLanguages = (publication) => {
+export const getContentByUserLanguages = (item) => {
   const userLanguagesList = getUserMainLanguagesList();
 
   const contentsByUserLanguage = userLanguagesList.map((language) => {
-    return publication.content[language] || null;
+    return item.content[language] || null;
   }).filter(Boolean);
 
   const contentsByUserLanguageWithDefaultValues = [
     ...contentsByUserLanguage,
-    publication.content.en || publication.content.pt,
+    item.content.pt || item.content.en,
   ];
 
   return contentsByUserLanguageWithDefaultValues[0];
