@@ -20,7 +20,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@reduxjs/toolkit": "^2.8.2",
-    "alloyeditor": "^2.14.10",
     "firebase": "^12.0.0",
     "i18next": "^25.3.1",
     "i18next-browser-languagedetector": "^8.2.0",
