@@ -4,22 +4,11 @@ import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   sendPasswordResetEmail,
-  setPersistence,
-  browserLocalPersistence,
 } from 'firebase/auth';
 
 import { app } from './firebase-app';
 
 export const auth = getAuth(app);
-
-setPersistence(auth, browserLocalPersistence)
-  .then(() => {
-    // Now the user's session will persist even if they close the browser
-    console.log('Persistence OK');
-  })
-  .catch((error) => {
-    console.error('Error setting persistence:', error);
-  });
 
 export const resetPasswordUser = async (email) => {
   const continueURL = window.location.origin;
