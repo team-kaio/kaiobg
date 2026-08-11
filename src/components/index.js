@@ -24,3 +24,4 @@ export * from './UsersList';
 export * from './Video';
 export * from './Workout';
 export * from './WorkoutsList';
+export * from './LoadingScreen';
