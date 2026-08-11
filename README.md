@@ -1,7 +1,12 @@
 # Kaio Borges Guerrero 
 
-Pendente:
+Salvar no local storage o edit de treinos
+Fazer paginacao dos exercicios
+
+WIP:
 - Fazer o esquema de ter nos exercícios salvos uma breve descrição do que ele afeta
+
+Pendente:
 - Fazer o histórico dos alunos
 - Organizar e deixar os "artigos" mais bonitos
 - Poder colocar os testes (que hoje estão no forms) direto na plataforma
@@ -12,3 +17,9 @@ Pendente:
 
 
 - A parte de cursos deveria, na verdade redirecionar para as páginas personalizadas de cursos (Não ser como os artigos)
+
+
+
+
+
+
