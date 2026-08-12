@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, ButtonConstants, PlusIcon, SaveButton, Select, WorkoutConstants, WorkoutsList } from '@/components';
+import { Button, ButtonConstants, PlusIcon, SaveButton, SearchableSelect, WorkoutConstants, WorkoutsList } from '@/components';
 import { UserSlice } from '@/store/slices';
 import { utils } from '@/utils';
 
@@ -138,22 +138,23 @@ const ManageWorkoutsPage = () => {
       return <span>{t('You don\'t have users :C')}</span>;
     }
 
-    const renderUsers = () => {
-      return users.map(user => {
-        return <option key={user.uid} value={user.uid}>{user.fullName} ({user.email})</option>;
-      });
-    };
+    const selectOptions = users.map(user => ({
+      label: user.fullName,
+      value: user.uid,
+      email: user.email,
+    }));
 
     return (
-      <Select
-        name="users"
-        emptyItemText="Select an user"
+      <SearchableSelect
+        options={selectOptions}
         value={selectedUser?.uid}
-        onChange={(event) => setSelectedUser(getUserByUid(event.target.value))}
-        renderItems={renderUsers}
+        onChange={(uid) => setSelectedUser(getUserByUid(uid))}
+        placeholder={t('Select an user')}
+        searchPlaceholder={t('Search users...')}
+        valueDisplayKey="email"
       />
     );
-  }, [ getUserByUid, selectedUser?.uid, t, users ]);
+  }, [ selectedUser?.uid, t, users, getUserByUid ]);
 
   const renderAddWorkoutButton = useCallback(() => {
     if(!selectedUser) {
@@ -193,6 +194,10 @@ const ManageWorkoutsPage = () => {
       <div>
         {renderUsers()}
       </div>
+
+      {selectedUser && (
+        <h2 className={styles.ManageWorkoutsPageUserName}>{selectedUser.fullName}</h2>
+      )}
 
       <div className={styles.ManageWorkoutsPageButtonsContainer}>
         {renderAddWorkoutButton()}

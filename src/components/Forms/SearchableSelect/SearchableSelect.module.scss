@@ -1,0 +1,100 @@
+@use '@/styles/colors';
+@use '@/styles/mixins';
+
+.SearchableSelect {
+  position: relative;
+  width: 100%;
+}
+
+.SearchableSelectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: colors.$white;
+  border: 1px solid colors.$gray;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: colors.$black;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: colors.$dark-blue;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: colors.$blue;
+    box-shadow: 0 0 0 2px rgba(colors.$blue, 0.15);
+  }
+}
+
+.SearchableSelectText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.SearchableSelectBody {
+  margin-top: 2px;
+}
+
+.SearchableSelectInput {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid colors.$gray;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus {
+    border-color: colors.$blue;
+    box-shadow: 0 0 0 2px rgba(colors.$blue, 0.15);
+  }
+
+  &::placeholder {
+    color: colors.$gray;
+  }
+}
+
+.SearchableSelectList {
+  width: 100%;
+  margin-top: 2px;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+  max-height: 180px;
+  list-style: none;
+  border: 1px solid colors.$gray;
+  border-radius: 4px;
+}
+
+.SearchableSelectOption {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: colors.$black;
+  transition: background-color 0.1s;
+
+  &:hover {
+    background: colors.$light-blue;
+  }
+
+  &.SearchableSelectOptionSelected {
+    background: colors.$light-blue;
+    font-weight: 500;
+  }
+
+  &.SearchableSelectOptionFocused {
+    background: rgba(colors.$blue, 0.12);
+  }
+}
+
+.SearchableSelectEmpty {
+  padding: 0.75rem;
+  text-align: center;
+  color: colors.$gray;
+  font-size: 0.875rem;
+}
