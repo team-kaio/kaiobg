@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,6 +16,27 @@ const ManageExercisesPage = () => {
   const exercises = useSelector(ExerciseSlice.selectors.selectAllExercises);
 
   const [ selectedExerciseId, setSelectedExerciseId ] = useState(null);
+
+  const prevExercisesRef = useRef(exercises);
+
+  // Auto-select the first (newest) exercise when a new item appears in the list
+  useEffect(() => {
+    const currentList = exercises || [];
+    const prevList = prevExercisesRef.current || [];
+
+    if (currentList.length > prevList.length && currentList[0]) {
+      setSelectedExerciseId(currentList[0].id);
+    }
+
+    prevExercisesRef.current = currentList;
+  }, [ exercises ]);
+
+  // Clear selection when deleted exercise is removed
+  useEffect(() => {
+    if (!selectedExerciseId && selectedExerciseId !== 0) return;
+    const exists = (exercises || []).some(ex => ex.id === selectedExerciseId);
+    if (!exists) setSelectedExerciseId(null);
+  }, [ exercises, selectedExerciseId ]);
 
   const handleAddNewExercise = useCallback(() => {
     dispatch(ExerciseSlice.actions.addExercise({ title: 'TEMP', videoUrl: '' }));
