@@ -63,12 +63,14 @@
 .SearchableSelectList {
   width: 100%;
   margin-top: 2px;
-  padding: 0.25rem 0;
   overflow-y: auto;
   max-height: 180px;
-  list-style: none;
   border: 1px solid colors.$gray;
   border-radius: 4px;
+}
+
+.SearchableSelectList div {
+  list-style: none;
 }
 
 .SearchableSelectOption {
@@ -77,6 +79,17 @@
   cursor: pointer;
   color: colors.$black;
   transition: background-color 0.1s;
+  display: flex;
+  align-items: center;
+
+  & > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+    flex-grow: 1;
+  }
 
   &:hover {
     background: colors.$light-blue;

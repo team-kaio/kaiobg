@@ -31,7 +31,7 @@ const Video = (props) => {
             className={styles.Video}
             src={embedUrl}
             title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
