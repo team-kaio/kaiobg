@@ -168,3 +168,16 @@ export const normalizeArticlePath = (path) => {
 
   return `/${trimmed}`;
 };
+
+export const getItemLS = (key, parse = false) => {
+  const value = localStorage?.getItem(key);
+  return parse ? JSON.parse(value) : value;
+};
+
+export const setItemLS = (key, value, stringify = false) => {
+  localStorage?.setItem(key, stringify ? JSON.stringify(value) : value);
+};
+
+export const removeItemLS = (key) => {
+  localStorage?.removeItem(key);
+};

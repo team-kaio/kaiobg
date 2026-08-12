@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { useCallback, memo, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { WORKOUT_MODES } from './constants';
@@ -6,24 +6,14 @@ import { WorkoutExercises } from './WorkoutExercises';
 import { WorkoutFooter } from './WorkoutFooter';
 import { WorkoutHeader } from './WorkoutHeader';
 
+import { getItemLS, setItemLS, removeItemLS } from '@/utils/fns';
+
 import styles from './Workout.module.scss';
 
 const COMPLETED_EXERCISES_KEY = 'completedExercises';
 const IS_EXPANDED_KEY = 'isExpanded';
 
-const setItemLS = (key, id, value, stringify = false) => {
-  localStorage?.setItem(`kb-workout-${id}-${key}`, stringify ? JSON.stringify(value) : value);
-};
-
-const getItemLS = (key, id, parse = false) => {
-  const value = localStorage?.getItem(`kb-workout-${id}-${key}`);
-  const normalizedValue = parse ? JSON.parse(value) : value;
-  return normalizedValue;
-};
-
-const removeItemLS = (key, id) => {
-  localStorage?.removeItem(`kb-workout-${id}-${key}`);
-};
+const getWorkoutKey = (id, field) => `kb-workout-${id}-${field}`;
 
 const Workout = (props) => {
   const { workout, mode, isExpanded: initialIsExpanded = false } = props;
@@ -31,8 +21,8 @@ const Workout = (props) => {
 
   const navigate = useNavigate();
 
-  const [ completedExercises, setCompletedExercises ] = useState(getItemLS(COMPLETED_EXERCISES_KEY, workout?.id, true) || workout?.completedExercises || []);
-  const [ isExpanded, setIsExpanded ] = useState(getItemLS(IS_EXPANDED_KEY, workout?.id) || initialIsExpanded);
+  const [ completedExercises, setCompletedExercises ] = useState(getItemLS(getWorkoutKey(workout?.id, COMPLETED_EXERCISES_KEY), true) || workout?.completedExercises || []);
+  const [ isExpanded, setIsExpanded ] = useState(getItemLS(getWorkoutKey(workout?.id, IS_EXPANDED_KEY)) || initialIsExpanded);
 
   const completedExercisesQty = useMemo(() => {
     return completedExercises.length;
@@ -40,7 +30,7 @@ const Workout = (props) => {
 
   const onChangeExpandedState = useCallback(() => {
     setIsExpanded(currentStatus => {
-      setItemLS(IS_EXPANDED_KEY, workout?.id, !currentStatus);
+      setItemLS(getWorkoutKey(workout?.id, IS_EXPANDED_KEY), !currentStatus);
       return !currentStatus;
     });
   }, []);
@@ -57,7 +47,7 @@ const Workout = (props) => {
           ]),
         ];
 
-        setItemLS(COMPLETED_EXERCISES_KEY, workout?.id, updatedValue, true);
+        setItemLS(getWorkoutKey(workout?.id, COMPLETED_EXERCISES_KEY), updatedValue, true);
         return updatedValue;
       }
 
@@ -66,15 +56,15 @@ const Workout = (props) => {
         ...arrayWithoutItem,
       ];
 
-      setItemLS(COMPLETED_EXERCISES_KEY, workout?.id, updatedValue, true);
+      setItemLS(getWorkoutKey(workout?.id, COMPLETED_EXERCISES_KEY), updatedValue, true);
 
       return updatedValue;
     });
   }, []);
 
   const onCompleteWorkout = useCallback(() => {
-    removeItemLS(COMPLETED_EXERCISES_KEY, workout?.id);
-    removeItemLS(IS_EXPANDED_KEY, workout?.id);
+    removeItemLS(getWorkoutKey(workout?.id, COMPLETED_EXERCISES_KEY));
+    removeItemLS(getWorkoutKey(workout?.id, IS_EXPANDED_KEY));
     navigate('/athlete', { replace: true });
   }, [ navigate ]);
 

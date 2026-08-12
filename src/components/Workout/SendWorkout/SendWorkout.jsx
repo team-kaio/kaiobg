@@ -4,22 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, ButtonConstants, PaperPlaneIcon, TextArea } from '@/components';
 import { UserSlice, CheckInSlice } from '@/store/slices';
-import { utils } from '@/utils';
+import { getItemLS, setItemLS, removeItemLS, getDateIsoFormat } from '@/utils/fns';
 
 const COMMENT_KEY = 'comment';
 
-const setItemLS = (key, id, value) => {
-  localStorage?.setItem(`kb-send-workout-${id}-${key}`, value);
-};
-
-const getItemLS = (key, id) => {
-  const value = localStorage?.getItem(`kb-send-workout-${id}-${key}`);
-  return value;
-};
-
-const removeItemLS = (key, id) => {
-  localStorage?.removeItem(`kb-send-workout-${id}-${key}`);
-};
+const getSendWorkoutKey = (id, field) => `kb-send-workout-${id}-${field}`;
 
 const SendWorkout = (props) => {
   const { workout, completedExercises } = props;
@@ -31,10 +20,10 @@ const SendWorkout = (props) => {
 
   const loggedUser = useSelector(UserSlice.selectors.selectLoggedUser);
 
-  const [ comment, setComment ] = useState(getItemLS(COMMENT_KEY, workout?.id) || '');
+  const [ comment, setComment ] = useState(getItemLS(getSendWorkoutKey(workout?.id, COMMENT_KEY)) || '');
 
   const onClickSendWorkout = useCallback(() => {
-    const now = utils.getDateIsoFormat(new Date());
+    const now = getDateIsoFormat(new Date());
 
     const { id: _, ...otherWorkoutData } = workout;
 
@@ -53,7 +42,7 @@ const SendWorkout = (props) => {
     }));
 
     setComment('');
-    removeItemLS(COMMENT_KEY, workout?.id);
+    removeItemLS(getSendWorkoutKey(workout?.id, COMMENT_KEY));
 
     onCompleteWorkout();
   }, [ comment, completedExercises, dispatch, loggedUser.uid, onCompleteWorkout, workout ]);
@@ -63,7 +52,7 @@ const SendWorkout = (props) => {
       <TextArea
         value={comment}
         onChange={event => {
-          setItemLS(COMMENT_KEY, workout?.id, event.target.value);
+          setItemLS(getSendWorkoutKey(workout?.id, COMMENT_KEY), event.target.value);
           setComment(event.target.value);
         }}
         placeholder={t('Comments about this workout')}
