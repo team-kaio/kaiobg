@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,6 +16,10 @@ const ManageWorkoutsPage = () => {
   const users = useSelector(UserSlice.selectors.selectUsers);
 
   const [ selectedUser, setSelectedUser ] = useState(null);
+
+  const activeUsers = useMemo(() => {
+    return users.filter(user => user.active);
+  }, [users]);
 
   const onUpdateSelectedUserWorkout = useCallback((workoutId, property, value) => {
     const currentWorkouts = utils.deepClone(selectedUser?.workouts) || [];
@@ -120,8 +124,8 @@ const ManageWorkoutsPage = () => {
   }, [ dispatch, selectedUser ]);
 
   const getUserByUid = useCallback((uid) => {
-    return utils.deepClone(users.find(user => user.uid === uid));
-  }, [ users ]);
+    return utils.deepClone(activeUsers.find(user => user.uid === uid));
+  }, [ activeUsers ]);
 
   const renderSaveButton = useCallback(() => {
     if(!selectedUser) {
@@ -134,11 +138,11 @@ const ManageWorkoutsPage = () => {
   }, [ onSaveWorkouts, selectedUser ]);
 
   const renderUsers = useCallback(() => {
-    if(!users?.length) {
+    if(!activeUsers?.length) {
       return <span>{t('You don\'t have users :C')}</span>;
     }
 
-    const selectOptions = users.map(user => ({
+    const selectOptions = activeUsers.map(user => ({
       label: user.fullName,
       value: user.uid,
       email: user.email,
@@ -154,7 +158,7 @@ const ManageWorkoutsPage = () => {
         valueDisplayKey="email"
       />
     );
-  }, [ selectedUser?.uid, t, users, getUserByUid ]);
+  }, [ selectedUser?.uid, t, activeUsers, getUserByUid ]);
 
   const renderAddWorkoutButton = useCallback(() => {
     if(!selectedUser) {

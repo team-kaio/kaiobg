@@ -20,6 +20,9 @@ Pendente:
 
 
 
+- Adicionar indicação visual de que as coisas não foram salvas
+
+
 
 
 

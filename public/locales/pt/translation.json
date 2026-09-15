@@ -182,5 +182,9 @@
   "You don't have permission to save courses": "Você não tem permissão para salvar cursos",
   "You don't have permission to remove courses": "Você não tem permissão para remover cursos",
   "Extra Activity Log": "Registro de Atividades Extras",
-  "Any physical activity that is not part of the training sessions": "Qualquer atividade física que não seja os treinos"
+  "Any physical activity that is not part of the training sessions": "Qualquer atividade física que não seja os treinos",
+  "Active": "Ativo",
+  "Inactive": "Inativo",
+  "Ativos": "Ativos",
+  "Inativos": "Inativos"
 }

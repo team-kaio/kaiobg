@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router';
@@ -32,35 +32,28 @@ const AthleteAreaPage = () => {
   const athleteId = searchParams.get('uid') || null;
 
   const loggedUser = useSelector(UserSlice.selectors.selectLoggedUser);
-  const selectedAthlete = useSelector(UserSlice.selectors.selectUserByUid(athleteId));
+  const allUsers = useSelector(UserSlice.selectors.selectUsers);
   const saveUserStatus = useSelector(UserSlice.selectors.selectSaveUserStatus);
 
   const uploadDialogFnsRef = useRef(null);
 
-  const athleteData = useMemo(() => {
-    if(!athleteId) {
-      return {
-        plan: '',
-        frequency: '',
-        ...(loggedUser || {}),
-        age: utils.calculateAge(loggedUser?.birthdate),
-      };
-    }
+  const [athleteData, setAthleteData] = useState(!athleteId ? loggedUser : null);
 
-    return {
-      plan: '',
-      frequency: '',
-      ...(selectedAthlete || {}),
-      age: utils.calculateAge(loggedUser?.birthdate),
-    };
-  }, [ athleteId, loggedUser, selectedAthlete ]);
+  useEffect(() => {
+    if(!athleteData && allUsers && allUsers.length > 0) {
+      const user = allUsers.find(user => user.uid === athleteId);
+      const age = utils.calculateAge(user?.birthdate);
+
+      setAthleteData({...user, age});
+    }
+  }, [athleteId, allUsers]);
 
   const onSubmitSaveUser = useCallback((data) => {
     dispatch(UserSlice.actions.saveUser({
       ...data,
-      uid: athleteData.uid,
+      uid: athleteData?.uid,
     }));
-  }, [ athleteData.uid, dispatch ]);
+  }, [ athleteData?.uid, dispatch ]);
 
   useEffect(() => {
     if(saveUserStatus == REQUEST_STATUS.SUCCEEDED) {
@@ -69,111 +62,125 @@ const AthleteAreaPage = () => {
     }
   }, [ dispatch, loggedUser, saveUserStatus ]);
 
+  const render = useCallback((data) => {
+    if(!athleteData) {
+      return <p>{t('Loading...')}</p>;
+    }
+
+    return (
+      <>
+        <div className={styles.AthleteCard}>
+          <div className={styles.content}>
+            <div className={styles.profileInfo}>
+              <div className={styles.profileAvatar}>
+                <AvatarPlaceholder
+                  userName={athleteData?.fullName}
+                  avatar={athleteData?.avatar}
+                  uploadDialogFnsRef={uploadDialogFnsRef}
+                />
+              </div>
+
+              <div className={styles.profileDetails}>
+                <h2 className={styles.profileName}>{athleteData?.fullName}</h2>
+
+                <div className={styles.profileGrid}>
+                  <div>
+                    <div className={styles.profileField}>
+                      <UserIcon />
+                      <span className={styles.profileFieldLabel}>{t('Age')}:</span>
+                      <span>{athleteData?.age} {t('years old')}</span>
+                    </div>
+                    <div className={styles.profileField}>
+                      <CalendarIcon />
+                      <span className={styles.profileFieldLabel}>{t('Plan')}:</span>
+                      <span>{athleteData?.plan}</span>
+                    </div>
+                    <div className={styles.profileField}>
+                      <LocationPinIcon />
+                      <span className={styles.profileFieldLabel}>{t('Frequency')}:</span>
+                      <span>{athleteData?.frequency}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.objective}>
+                  <p>
+                    <strong>{t('Objective')}:</strong> {athleteData?.goal}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={`${styles.ActionsGrid} ${styles.grid3Cols}`}>
+          <ActionCard
+            renderIcon={(props) => <ClipboardListIcon {...props} />}
+            title={t('Training')}
+            description={t('Access your workouts')}
+            to={{
+              pathname: '/workout',
+              ...(athleteId ? { search: `?uid=${athleteId}` } : {}),
+            }}
+          />
+
+          <ActionCard
+            renderIcon={(props) => <ClipboardCheckIcon {...props} />}
+            title="Check-ins"
+            description={t('Check-in history')}
+            to={{ pathname: '/check-ins' }}
+          >
+            <div className={styles.actionCardMeta}>
+              <div className={styles.label}>{t('Last check-in')}:</div>
+              <div className={styles.value}>
+                {athleteData?.lastCheckInDate ? utils.getDateFormatted(new Date(athleteData?.lastCheckInDate), { weekday: 'long' }) : t('No check-in found')}
+              </div>
+            </div>
+          </ActionCard>
+
+          <ActionCard
+            renderIcon={(props) => <RankingStarIcon {...props} />}
+            title={t('Physical Assessment')}
+            description={t('Assessment history')}
+            to="https://docs.google.com/forms/d/e/1FAIpQLSf2KM8eL73tpl8tEZb61pPZ9ZsEYljEZvDkqFw0eO1sVzK53g/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className={styles.actionCardMeta}>
+              <div className={styles.value}>{t('Click to fill the form')}</div>
+            </div>
+          </ActionCard>
+        </div>
+
+        <div className={styles.AthleteCard}>
+          <div className={styles.content}>
+            <div className={styles.profileInfo}>
+              <div className={styles.profileDetails}>
+                {athleteData && (
+                  <UserForm
+                    mode={UserFormConstants.USER_FORM_MODES.EDIT}
+                    initialData={athleteData}
+                    onSubmit={onSubmitSaveUser}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <UploadProfilePictureDialog
+          dialogFnsRef={uploadDialogFnsRef}
+          onConfirm={onSubmitSaveUser}
+        />
+      </>
+    );
+  }, [athleteData]);
+
   return (
     <div className={styles.AthleteAreaPage}>
       <h1>{t('Athlete')}</h1>
 
-      <div className={styles.AthleteCard}>
-        <div className={styles.content}>
-          <div className={styles.profileInfo}>
-            <div className={styles.profileAvatar}>
-              <AvatarPlaceholder
-                userName={athleteData?.fullName}
-                avatar={athleteData?.avatar}
-                uploadDialogFnsRef={uploadDialogFnsRef}
-              />
-            </div>
-
-            <div className={styles.profileDetails}>
-              <h2 className={styles.profileName}>{athleteData.fullName}</h2>
-
-              <div className={styles.profileGrid}>
-                <div>
-                  <div className={styles.profileField}>
-                    <UserIcon />
-                    <span className={styles.profileFieldLabel}>{t('Age')}:</span>
-                    <span>{athleteData.age} {t('years old')}</span>
-                  </div>
-                  <div className={styles.profileField}>
-                    <CalendarIcon />
-                    <span className={styles.profileFieldLabel}>{t('Plan')}:</span>
-                    <span>{athleteData.plan}</span>
-                  </div>
-                  <div className={styles.profileField}>
-                    <LocationPinIcon />
-                    <span className={styles.profileFieldLabel}>{t('Frequency')}:</span>
-                    <span>{athleteData.frequency}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.objective}>
-                <p>
-                  <strong>{t('Objective')}:</strong> {athleteData.goal}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={`${styles.ActionsGrid} ${styles.grid3Cols}`}>
-        <ActionCard
-          renderIcon={(props) => <ClipboardListIcon {...props} />}
-          title={t('Training')}
-          description={t('Access your workouts')}
-          to={{
-            pathname: '/workout',
-            ...(athleteId ? { search: `?uid=${athleteId}` } : {}),
-          }}
-        />
-
-        <ActionCard
-          renderIcon={(props) => <ClipboardCheckIcon {...props} />}
-          title="Check-ins"
-          description={t('Check-in history')}
-          to={{ pathname: '/check-ins' }}
-        >
-          <div className={styles.actionCardMeta}>
-            <div className={styles.label}>{t('Last check-in')}:</div>
-            <div className={styles.value}>
-              {athleteData?.lastCheckInDate ? utils.getDateFormatted(new Date(athleteData.lastCheckInDate), { weekday: 'long' }) : t('No check-in found')}
-            </div>
-          </div>
-        </ActionCard>
-
-        <ActionCard
-          renderIcon={(props) => <RankingStarIcon {...props} />}
-          title={t('Physical Assessment')}
-          description={t('Assessment history')}
-          to="https://docs.google.com/forms/d/e/1FAIpQLSf2KM8eL73tpl8tEZb61pPZ9ZsEYljEZvDkqFw0eO1sVzK53g/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div className={styles.actionCardMeta}>
-            <div className={styles.value}>{t('Click to fill the form')}</div>
-          </div>
-        </ActionCard>
-      </div>
-
-      <div className={styles.AthleteCard}>
-        <div className={styles.content}>
-          <div className={styles.profileInfo}>
-            <div className={styles.profileDetails}>
-              <UserForm
-                mode={UserFormConstants.USER_FORM_MODES.EDIT}
-                initialData={athleteData}
-                onSubmit={onSubmitSaveUser}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <UploadProfilePictureDialog
-        dialogFnsRef={uploadDialogFnsRef}
-        onConfirm={onSubmitSaveUser}
-      />
+      {render()}
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { REQUEST_STATUS } from '@/constants';
 import { usersService } from '@/services';
 
+import { utils } from '@/utils';
+
 import { USER_SLICE_NAME } from '../constants';
 
 // Initial State
@@ -33,6 +35,7 @@ const extraReducers = (builder) => {
     .addCase(asyncThunk.loadUser.fulfilled, (state, action) => {
       state.loggedUserStatus = REQUEST_STATUS.SUCCEEDED;
       state.loggedUser = action.payload;
+      state.loggedUser.age = utils.calculateAge(state.loggedUser?.birthdate);
     })
     .addCase(asyncThunk.loadUser.rejected, (state) => {
       state.loggedUserStatus = REQUEST_STATUS.FAILED;

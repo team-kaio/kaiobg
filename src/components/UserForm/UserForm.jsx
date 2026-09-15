@@ -8,8 +8,7 @@ import { UserSlice } from '@/store/slices';
 import styles from './UserForm.module.scss';
 
 const UserForm = (props) => {
-  const { mode, initialData = null } = props;
-  const { onSubmit } = props;
+  const { mode, initialData = null, onSubmit } = props;
 
   const { t } = useTranslation();
 
@@ -29,6 +28,7 @@ const UserForm = (props) => {
   const [ medicalRestrictions, setMedicalRestrictions ] = useState(initialData?.medicalRestrictions || '');
   const [ medicine, setMedicine ] = useState(initialData?.medicine || '');
   const [ confirmInformation, setConfirmInformation ] = useState(false);
+  const [ active, setActive ] = useState(initialData?.active ?? true);
 
   const SUBMIT_BUTTON_MAPPER = useMemo(() => {
     return {
@@ -47,6 +47,7 @@ const UserForm = (props) => {
     event.preventDefault();
 
     const data = mode == UserFormConstants.USER_FORM_MODES.SIGN_UP || loggedUser?.isAdmin ? {
+      active,
       fullName,
       email,
       password,
@@ -69,10 +70,26 @@ const UserForm = (props) => {
     };
 
     onSubmit(data);
-  }, [ birthdate, confirmInformation, confirmPassword, email, frequency, fullName, goal, limitations, loggedUser?.isAdmin, medicalRestrictions, medicine, mode, occupation, onSubmit, password, phoneNumber, plan ]);
+  }, [ active, birthdate, confirmInformation, confirmPassword, email, frequency, fullName, goal, limitations, loggedUser?.isAdmin, medicalRestrictions, medicine, mode, occupation, onSubmit, password, phoneNumber, plan ]);
 
   return (
     <form onSubmit={onSubmitForm} className={styles.UserForm}>
+      {
+        mode == UserFormConstants.USER_FORM_MODES.EDIT ? (
+          <FieldWithLabel
+            label={t('Active')}
+            field={(
+              <Input
+                type="checkbox"
+                name="active"
+                checked={active}
+                onChange={(event) => setActive(event.target.checked)}
+              />
+            )}
+          />
+        ) : <></>
+      }
+
       <FieldWithLabel
         label={t('Fullname')}
         field={(

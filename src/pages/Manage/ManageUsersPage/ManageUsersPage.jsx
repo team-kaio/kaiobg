@@ -12,15 +12,26 @@ const ManageUsersPage = () => {
 
   const users = useSelector(UserSlice.selectors.selectUsers);
 
+  const activeUsers = users?.filter(user => user.active) ?? [];
+  const inactiveUsers = users?.filter(user => !user.active) ?? [];
+
   return (
     <div className={styles.ManageUsersPage}>
       <h1>{t('Manage Users')}</h1>
 
-      {users?.length ? (
-        <UsersList
-          items={users}
-        />
-      ) : <></>}
+      {activeUsers?.length ? (
+        <>
+          <h2>{t('Ativos')}</h2>
+          <UsersList items={activeUsers} />
+        </>
+      ) : null}
+
+      {inactiveUsers?.length ? (
+        <>
+          <h2>{t('Inativos')}</h2>
+          <UsersList items={inactiveUsers} />
+        </>
+      ) : null}
     </div>
   );
 };

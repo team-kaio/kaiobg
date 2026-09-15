@@ -45,7 +45,10 @@ export const loadUsers = async () => {
   );
   const querySnapshots = await getDocs(q);
 
-  const users = querySnapshots.docs.map(doc => doc.data());
+  const users = querySnapshots.docs.map(doc => ({
+    ...doc.data(),
+    active: doc.data().active ?? true,
+  }));
 
   return users;
 };

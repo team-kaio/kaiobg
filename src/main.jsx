@@ -7,8 +7,6 @@ import { store } from '@/store';
 import { App } from './App.jsx';
 import './i18n';
 
-console.log('TESTE');
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
