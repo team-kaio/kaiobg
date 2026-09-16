@@ -28,6 +28,7 @@
     "auth/network-request-failed": "Network Error: Please, check your network connection"
   },
   "user/saveUserWorkouts/fulfilled": "Workout saved",
+  "user/saveUser/fulfilled": "Saved",
   "user/saveUser/rejected": {
     "permission-denied": "You don't have permission to save users",
     "auth/network-request-failed": "Network Error: Please, check your network connection"

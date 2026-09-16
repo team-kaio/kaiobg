@@ -63,8 +63,17 @@ const extraReducers = (builder) => {
     .addCase(asyncThunk.saveUser.pending, (state) => {
       state.saveUserStatus = REQUEST_STATUS.LOADING;
     })
-    .addCase(asyncThunk.saveUser.fulfilled, (state) => {
+    .addCase(asyncThunk.saveUser.fulfilled, (state, action) => {
       state.saveUserStatus = REQUEST_STATUS.SUCCEEDED;
+
+      const outdatedUserIndex = state.users.findIndex(user => user.uid == action.payload.uid);
+      const outdatedUser = state.users[outdatedUserIndex];
+      const updatedUser = {
+        ...outdatedUser,
+        ...action.payload,
+      };
+
+      state.users[outdatedUserIndex] = updatedUser;
     })
     .addCase(asyncThunk.saveUser.rejected, (state) => {
       state.saveUserStatus = REQUEST_STATUS.FAILED;
